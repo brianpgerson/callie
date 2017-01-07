@@ -1,4 +1,6 @@
 'use strict';
+require('dotenv').config();
+
 var CountdownBot = require('../lib/countdown');
 
 var token = process.env.BOT_API_KEY;

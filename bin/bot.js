@@ -17,7 +17,7 @@ var thecount = new CountdownBot({
     date: '2017-03-09'
 });
 
-schedule.scheduleJob('* * * * 1', function(){
+schedule.scheduleJob('* * 10 * 1', function(){
   	_.each(thecount.channels, function(channel) {
   		var message = `Weekly update: ${thecount._generateResponse()}`;
   		thecount.postMessage(channel, message, {as_user: thecount.user.name});

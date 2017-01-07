@@ -1,5 +1,4 @@
 'use strict';
-require('dotenv').config();
 
 var CountdownBot = require('../lib/countdown');
 

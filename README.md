@@ -1,16 +1,16 @@
 # The Count
 
-The Count is a slackbot that counts down the days to a given event. The way he works is extremely simple, but you'll have to configure things like the event name, date, and destination yourself by messing around with the actual code. Everything else is pretty much outta the box. I was surprised that there wasn't already a good countdown bot, but whatever.
+The Count is a slackbot that counts down the days to a given event. The way he works is extremely simple, but you'll have to configure things like the event name, date, and destination yourself. Everything is pretty much outta the box. I was surprised that there wasn't already a good countdown bot, but whatever. Enjoy.
 
 ## Setup
 
-* Add the bot to your slack group and set the result API key to your environment vars
-* Replace the event date and name with your own event date and name
-* My countdown is for a mystery trip, so I just select a random city for fun because my friends can't know the actual destination. Do whatever you want instead of using the cities module.
+* Add the bot to your slack group (https://YOURGROUP.slack.com/services/new/bot) and set the resulting API key to your environment vars
+* Replace the event date and name with your own event date and name in the code, or just use @thecount's update functionality.
+* The defaults are for a mystery trip in March. That's because my countdown is for a mystery trip and I don't want to reset it every time I update, so you'll just have to do that instead unless you update the code. I just select a random city for fun because my friends can't know the actual destination. Do whatever you want instead of using the cities module.
 
 ## Running
-* IDK, deploy to heroku or something. Or just run it locally with `node bin/bot.js`. But heroku is prob easier to keep running.
+* IDK, deploy to heroku or something. Or just run it locally with `node bin/bot.js`. But heroku is prob easier to keep running forever
 
 ## Next steps
 
-* Dynamic event creation using slash commands. This should be super fuckin easy if one of you readers would like to contribute and has time. I'm tired and going home now.
+* Implement a database so the count can keep track of multiple events. Feel free to contribute.

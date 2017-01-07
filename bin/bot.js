@@ -1,5 +1,8 @@
 'use strict';
 
+// I use dotenv to manage config vars. remove below if you do not.
+// require('dotenv').config();
+
 var CountdownBot = require('../lib/countdown');
 var cities = require('../data/cities');
 var token = process.env.BOT_API_KEY;
@@ -16,7 +19,7 @@ var thecount = new CountdownBot({
 
 schedule.scheduleJob('* * * * 1', function(){
   	_.each(thecount.channels, function(channel) {
-  		var message = `Weekly update: ${thecount._generateResponse()e}`;
+  		var message = `Weekly update: ${thecount._generateResponse()}`;
   		thecount.postMessage(channel, message, {as_user: thecount.user.name});
   	});
 });

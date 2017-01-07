@@ -2,11 +2,14 @@
 
 The Count is a slackbot that counts down the days to a given event. The way he works is extremely simple, but you'll have to configure things like the event name, date, and destination yourself by messing around with the actual code. Everything else is pretty much outta the box. I was surprised that there wasn't already a good countdown bot, but whatever.
 
-## Installation
+## Setup
 
 * Add the bot to your slack group and set the result API key to your environment vars
 * Replace the event date and name with your own event date and name
 * My countdown is for a mystery trip, so I just select a random city for fun because my friends can't know the actual destination. Do whatever you want instead of using the cities module.
+
+## Running
+* IDK, deploy to heroku or something. Or just run it locally with `node bin/bot.js`. But heroku is prob easier to keep running.
 
 ## Next steps
 

@@ -1,4 +1,4 @@
-# noisecave
+# The Count
 
 The Count is a slackbot that counts down the days to a given event. The way he works is extremely simple, but you'll have to configure things like the event name, date, and destination yourself by messing around with the actual code. Everything else is pretty much outta the box.
 

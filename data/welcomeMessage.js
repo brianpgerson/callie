@@ -1,6 +1,7 @@
 module.exports = `I'm a friendly countdown bot, and I'm very simple to use.
+
 Simply call my name (\`@thecount\`) and I'll tell you how many days are left until an event or trip to a destination of your choosing.
-Each countdown just needs either a destination, an event name, or both, plus the date.
+A countdown just needs a date, an event name, and an optional destination.
 
 To set (or reset) your countdown, simply say:
 

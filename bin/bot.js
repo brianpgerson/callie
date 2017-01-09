@@ -7,15 +7,21 @@ var CountdownBot = require('../lib/countdown');
 var cities = require('../data/cities');
 var token = process.env.BOT_API_KEY;
 var _ = require('lodash');
+var mongoose = require('mongoose');
+
+mongoose.Promise = require('bluebird');
+mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}:@jello.modulusmongo.net:27017/t2ipixUp`)
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('connected!')
+});
 
 var thecount = new CountdownBot({
     token: token,
-    name: 'thecount',
-    destination: 'your awesome place',
-    event: 'New Years Eve',
-    date: '2017-12-31',
-    chron: '* * 10 * * 1'   // see https://www.npmjs.com/package/node-schedule
-    				    	// for formatting info on chron rules
+    db: db,
+    name: 'thecount'
 });
 
 thecount.run();

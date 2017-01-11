@@ -1,7 +1,7 @@
 'use strict';
 
 // I use dotenv to manage config vars. remove below if you do not.
-require('dotenv').config();
+// require('dotenv').config();
 
 var CountdownBot = require('../lib/countdown');
 var cities = require('../data/cities');

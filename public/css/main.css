@@ -13,7 +13,8 @@ hr {
 }
 
 .hero {
-	padding: 100px;
+	color: aliceblue;
+	padding-top: 100px;
 	width: 100%;
 	background: rgba(248,80,50,1);
 	background: -moz-linear-gradient(-45deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
@@ -23,4 +24,22 @@ hr {
 	background: -ms-linear-gradient(-45deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
 	background: linear-gradient(135deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#f0b55d', GradientType=1 );
+}
+
+.hero img {
+	width: 100%;
+	margin-bottom: 40px;
+}
+
+.hero h1 {
+	margin-bottom: 0 auto;
+}
+
+.hero h3 {
+	margin-bottom: 40px;
+}
+
+.row.examples > div {
+	display: inline-block;
+    float: none;
 }

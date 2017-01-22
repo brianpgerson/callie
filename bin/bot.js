@@ -12,6 +12,7 @@ const CountdownBot = require('../lib/countdown'),
 		express = require('express'),
 		app = express();
 
+
 mongoose.Promise = require('bluebird');
 mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}:@jello.modulusmongo.net:27017/t2ipixUp`)
 
@@ -21,6 +22,7 @@ db.once('open', function() {
   console.log('connected to DB!')
 });
 
+app.use(express.static('public'))
 
 const server = app.listen(1337);
 console.log(`Your server is running on port 1337.`);

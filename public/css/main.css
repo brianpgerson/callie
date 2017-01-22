@@ -1,0 +1,26 @@
+.jumbotron {
+	padding: 0;
+}
+
+#add_to_slack {
+	height: 40px;
+	width: 139px;
+}
+
+hr {
+    width: 60%;
+    border: 2px solid rgb(51, 51, 51);
+}
+
+.hero {
+	padding: 100px;
+	width: 100%;
+	background: rgba(248,80,50,1);
+	background: -moz-linear-gradient(-45deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(248,80,50,1)), color-stop(100%, rgba(240,181,93,1)));
+	background: -webkit-linear-gradient(-45deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
+	background: -o-linear-gradient(-45deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
+	background: -ms-linear-gradient(-45deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
+	background: linear-gradient(135deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#f0b55d', GradientType=1 );
+}

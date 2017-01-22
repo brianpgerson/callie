@@ -9,7 +9,7 @@ module.exports = function(app, db) {
 	slack = new Slack();
   	// Initializing route groups
   	app.get('/', (req, res) => {
-	    res.sendFile(path.join(__dirname + '/index.html'));
+	    res.sendFile(path.join(__dirname + '/public/pages/index.html'));
   	});
 
   	app.get('/thanks', (req, res) => {
@@ -25,7 +25,7 @@ module.exports = function(app, db) {
   		}, function (err, response) {
   			if (!!err) {
   				console.error(err);
-  				res.status(500).sendFile(path.join(__dirname+ '/error.html')
+  				res.status(500).sendFile(path.join(__dirname + '/public/pages/error.html'));
   			} else {
   				const botAccessToken = response.bot.bot_access_token;
   				const botId = response.bot.bot_user_id;
@@ -45,7 +45,7 @@ module.exports = function(app, db) {
 					});
 
 					countdownBot.run();
-  					res.sendFile(path.join(__dirname + '/thanks.html'));
+  					res.sendFile(path.join(__dirname + '/public/pages/thanks.html'));
   				});
   			}
   		})

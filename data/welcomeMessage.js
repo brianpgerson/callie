@@ -1,4 +1,4 @@
-module.exports = `Hi, I'm Callie! I'm a simple way to keep a running countdown to an event you and your team are excited about.
+module.exports = `Hi, I'm Callie - I'm a simple way to keep a running countdown to an event you and your team are excited about.
 
 Any countdown just needs a date, an event name, and an optional destination.
 
@@ -24,7 +24,7 @@ You can cancel automated reminders for an event by saying:
 
 \`@callie cancel event: <event name>\`
 
-(Resetting the event will start your automated reminders again, BTW)
+If you reset the event, I'll start your automated reminders again. Arf!
 
 Lastly, you can delete a countdown entirely by, you guessed it:
 

@@ -24,7 +24,7 @@ db.once('open', function() {
 
 app.use(express.static('public'))
 
-const server = app.listen(1337);
+const server = app.listen(process.env.PORT);
 console.log(`Your server is running on port 1337.`);
 router(app, db);
 

@@ -1,6 +1,7 @@
 const express = require('express'),
 		path = require('path'),
 		Bot = require('./lib/models/bot'),
+		serveStatic = require('serve-static'),
 		CountdownBot = require('./lib/countdown');
 	    Slack = require('slack-node');
 
@@ -8,17 +9,8 @@ const express = require('express'),
 module.exports = function(app, db) {
 	slack = new Slack();
   	// Initializing route groups
-  	app.get('/', (req, res) => {
-	    res.sendFile(path.join(__dirname + '/public/pages/index.html'));
-  	});
 
-	app.get('/error', (req, res) => {
-	    res.sendFile(path.join(__dirname + '/public/pages/error.html'));
-  	});
-
-  	  	app.get('/privacy', (req, res) => {
-	    res.sendFile(path.join(__dirname + '/public/pages/privacy.html'));
-  	});
+  	app.use("/", express.static(__dirname + '/public/'));
 
   	app.get('/thanks', (req, res) => {
   		code = req.query.code;
@@ -33,7 +25,7 @@ module.exports = function(app, db) {
   		}, function (err, response) {
   			if (!!err) {
   				console.error(err);
-  				res.status(500).sendFile(path.join(__dirname + '/public/pages/error.html'));
+  				res.status(500).sendFile(path.join(__dirname + '/public/error.html'));
   			} else {
   				const botAccessToken = response.bot.bot_access_token;
   				const botId = response.bot.bot_user_id;
@@ -53,10 +45,13 @@ module.exports = function(app, db) {
 					});
 
 					countdownBot.run();
-  					res.sendFile(path.join(__dirname + '/public/pages/thanks.html'));
+  					res.sendFile(path.join(__dirname + '/public/thanks.html'));
   				});
   			}
-  		})
+  		});
+  	});
 
-  	})
+  	app.use('/*', (req, res) => {
+		res.status(500).sendFile(path.join(__dirname + '/public/error.html'));
+  	});
 };

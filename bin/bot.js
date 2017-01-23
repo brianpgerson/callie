@@ -1,7 +1,7 @@
 'use strict';
 
 // I use dotenv to manage config vars. remove below if you do not.
-// require('dotenv').config();
+require('dotenv').config();
 
 const CountdownBot = require('../lib/countdown'),
 		cities = require('../data/cities'),
@@ -20,7 +20,7 @@ db.once('open', function() {
   console.log('connected to DB!')
 });
 
-app.use(express.static('public'))
+app.use("/public", express.static(__dirname));
 
 app.listen(process.env.PORT || 1337, function(){
   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);

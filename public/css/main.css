@@ -15,6 +15,11 @@
 	top: 70px;
 }
 
+#big_callie {
+	height: 400px;
+	width: auto;
+}
+
 hr {
     width: 60%;
     border: 2px solid rgb(51, 51, 51);
@@ -44,6 +49,10 @@ hr {
 	background: -ms-linear-gradient(-45deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
 	background: linear-gradient(135deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#f0b55d', GradientType=1 );
+}
+
+.wholepage {
+	min-height: 800px;
 }
 
 .night {

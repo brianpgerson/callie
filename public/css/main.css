@@ -7,6 +7,14 @@
 	width: 139px;
 }
 
+#little_callie {
+	position: absolute;
+	height: 90px;
+	width: auto;
+	margin-left: 20px;
+	top: 0px;
+}
+
 hr {
     width: 60%;
     border: 2px solid rgb(51, 51, 51);

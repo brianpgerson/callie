@@ -7,10 +7,7 @@ const CountdownBot = require('../lib/countdown'),
 		cities = require('../data/cities'),
 		token = process.env.BOT_API_KEY,
 		_ = require('lodash'),
-		mongoose = require('mongoose'),
-		router = require('../router'),
-		express = require('express'),
-		app = express();
+		mongoose = require('mongoose');
 
 
 mongoose.Promise = require('bluebird');
@@ -22,12 +19,5 @@ db.once('open', function() {
   console.log('connected to DB!')
 });
 
-app.use(express.static('public'))
 
-app.listen(process.env.PORT || 1337, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
-
-console.log(`Your server is running on port 1337.`);
-router(app, db);
 

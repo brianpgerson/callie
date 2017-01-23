@@ -24,7 +24,10 @@ db.once('open', function() {
 
 app.use(express.static('public'))
 
-const server = app.listen(process.env.PORT);
+app.listen(process.env.PORT || 1337, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
+
 console.log(`Your server is running on port 1337.`);
 router(app, db);
 

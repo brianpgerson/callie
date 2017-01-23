@@ -12,14 +12,13 @@ module.exports = function(app, db) {
 	    res.sendFile(path.join(__dirname + '/public/pages/index.html'));
   	});
 
-  	app.get('/privacy', (req, res) => {
-	    res.sendFile(path.join(__dirname + '/public/pages/privacy.html'));
-  	});
-
 	app.get('/error', (req, res) => {
 	    res.sendFile(path.join(__dirname + '/public/pages/error.html'));
   	});
 
+  	  	app.get('/privacy', (req, res) => {
+	    res.sendFile(path.join(__dirname + '/public/pages/privacy.html'));
+  	});
 
   	app.get('/thanks', (req, res) => {
   		code = req.query.code;

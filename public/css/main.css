@@ -12,9 +12,21 @@ hr {
     border: 2px solid rgb(51, 51, 51);
 }
 
-.hero {
+.white {
 	color: aliceblue;
+}
+
+.extra-fun {
+	color: cyan;
+}
+
+.extra-fun:hover {
+	color: magenta;
+}
+
+.hero {
 	padding-top: 100px;
+	padding-bottom: 40px;
 	width: 100%;
 	background: rgba(248,80,50,1);
 	background: -moz-linear-gradient(-45deg, rgba(248,80,50,1) 0%, rgba(240,181,93,1) 100%);
@@ -26,20 +38,68 @@ hr {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#f0b55d', GradientType=1 );
 }
 
+.night {
+	width: 100%;
+	padding-top: 100px;
+	height: 500px;
+	background: rgba(0,13,255,1);
+	background: -moz-linear-gradient(45deg, rgba(0,13,255,1) 0%, rgba(186,0,140,1) 100%);
+	background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(0,13,255,1)), color-stop(100%, rgba(186,0,140,1)));
+	background: -webkit-linear-gradient(45deg, rgba(0,13,255,1) 0%, rgba(186,0,140,1) 100%);
+	background: -o-linear-gradient(45deg, rgba(0,13,255,1) 0%, rgba(186,0,140,1) 100%);
+	background: -ms-linear-gradient(45deg, rgba(0,13,255,1) 0%, rgba(186,0,140,1) 100%);
+	background: linear-gradient(45deg, rgba(0,13,255,1) 0%, rgba(186,0,140,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000dff', endColorstr='#ba008c', GradientType=1 );
+}
+
 .hero img {
 	width: 100%;
 	margin-bottom: 40px;
+}
+
+.small-text-box {
+    border: 2px solid aliceblue;
+    padding: 50px;
+}
+
+.night li {
+	list-style: none;
+}
+
+.night ul {
+	padding-top: 50px;
+}
+
+.half-icon span {
+	float: left;
+	font-size: 20px;
+}
+
+.night a {
+	color: aliceblue;
 }
 
 .hero h1 {
 	margin-bottom: 0 auto;
 }
 
-.hero h3 {
+.night li {
+	float: left;
+}
+
+.push-down {
 	margin-bottom: 40px;
 }
 
-.row.examples > div {
+.full-glyph {
+	font-size: 40px;
+}
+ .breakdown-panel > p {
+ 	min-height: 100px;
+ 	display: flex;
+ }
+
+.row.examples  div {
 	display: inline-block;
     float: none;
 }

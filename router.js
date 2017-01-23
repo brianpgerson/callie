@@ -23,7 +23,7 @@ module.exports = function(app, db) {
   			client_secret: process.env.SLACK_SECRET,
   			code: code
   		}, function (err, response) {
-  			if (!!err) {
+  			if (!!err || !response.bot) {
   				console.error(err);
   				res.status(500).sendFile(path.join(__dirname + '/public/error.html'));
   			} else {

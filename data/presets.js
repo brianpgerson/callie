@@ -1,10 +1,14 @@
-var welcomeMessage = require('./welcomeMessage');
-var cities = require('./cities');
-var openers = require('./openers');
-var enders = require('./enders');
+'use strict'
+
+const help = require('./help'),
+	  sayHello = require('./sayHello'),
+	  cities = require('./cities'),
+	  openers = require('./openers'),
+	  enders = require('./enders');
 
 module.exports = {
-	welcomeMessage: welcomeMessage,
+	help: help,
+	sayHello: sayHello,
 	cities: cities,
 	openers: openers,
 	enders: enders

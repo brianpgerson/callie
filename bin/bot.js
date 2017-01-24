@@ -3,6 +3,14 @@
 // I use dotenv to manage config vars. remove below if you do not.
 // require('dotenv').config();
 
+
+// TODOS:
+/*
+* LIST OF LENGTH ZERO EVENTS
+*
+*
+*
+*/
 const CountdownBot = require('../lib/countdown'),
 		cities = require('../data/cities'),
 		mongoose = require('mongoose'),
@@ -45,7 +53,7 @@ Bot.find({}).then(function (bots) {
 		bootUpBot.run();
 
 		Countdown.find({botId: bot.botAccessToken}).then(function(countdown) {
-			if (countdown.schedule.active) {
+			if (_.get(countdown, 'schedule.active')) {
 				bootUpBot.handleNewChronJob(countdown);
 			}
 		});

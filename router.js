@@ -42,7 +42,7 @@ module.exports = function(app, db) {
   					const countdownBot = new CountdownBot({
     					token: botAccessToken,
     					db: db,
-    					name: 'thecount'
+    					name: 'callie'
 					});
 
 					countdownBot.run();

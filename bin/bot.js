@@ -7,8 +7,8 @@ const CountdownBot = require('../lib/countdown'),
 		cities = require('../data/cities'),
 		mongoose = require('mongoose'),
 		router = require('../router'),
-		Bot = require('./models/bot'),
-		Countdown = require('./models/countdown'),
+		Bot = require('../lib/models/bot'),
+		Countdown = require('../lib/models/countdown'),
 		express = require('express'),
 		app = express();
 

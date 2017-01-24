@@ -7,6 +7,8 @@ const CountdownBot = require('../lib/countdown'),
 		cities = require('../data/cities'),
 		mongoose = require('mongoose'),
 		router = require('../router'),
+		Bot = require('./models/bot'),
+		Countdown = require('./models/countdown'),
 		express = require('express'),
 		app = express();
 
@@ -28,4 +30,24 @@ app.listen(process.env.PORT || 1337, function(){
 
 console.log(`Your server is running on port 1337.`);
 router(app, db);
+
+Bot.find({}).then(function (bots) {
+	_.each(bots, function(bot) {
+		console.log(bot);
+
+		var bootUpBot = new CountdownBot({
+			token: bot.botAccessToken,
+			db: db,
+			name: 'callie'
+		})
+
+		bootUpBot.run();
+
+		Countdown.find({botId: bot.botAccessToken}).then(function(countdown) {
+			if (countdown.schedule.active) {
+				bootUpBot.handleNewChronJob(countdown);
+			}
+		});
+	});
+});
 

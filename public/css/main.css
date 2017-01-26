@@ -101,7 +101,7 @@ hr {
 }
 
 .night li {
-	float: left;
+	margin-bottom: 10px;
 }
 
 .push-down {

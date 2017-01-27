@@ -32,27 +32,33 @@ module.exports = function(app, db) {
   				const botId = response.bot.bot_user_id;
   				const teamId = response.team_id;
 
-  				const bot = new Bot({
-  					botAccessToken: botAccessToken,
-  					userId: botId,
-  					teamId: teamId
-  				});
+  				Bot.find({teamId: team}).then(function (bot) {
+  					if (bot) {
+  						res.sendFile(path.join(__dirname + '/public/oops.html'));
+  					} else {
+  						const bot = new Bot({
+		  					botAccessToken: botAccessToken,
+		  					userId: botId,
+		  					teamId: teamId
+		  				});
 
-  				bot.save().then(function (bot) {
-  					const countdownBot = new CountdownBot({
-    					token: botAccessToken,
-    					db: db,
-    					name: 'callie'
-					});
+		  				bot.save().then(function (bot) {
+		  					const countdownBot = new CountdownBot({
+		    					token: botAccessToken,
+		    					db: db,
+		    					name: 'callie'
+							});
 
-					countdownBot.run();
-					const channel = _.get(response, 'incoming_webhook.channel');
-					if (channel) {
-						countdownBot.hello(channel);
-					}
+							countdownBot.run();
+							const channel = _.get(response, 'incoming_webhook.channel');
+							if (channel) {
+								countdownBot.hello(channel);
+							}
 
-					countdownBot.hello(response);
-  					res.sendFile(path.join(__dirname + '/public/thanks.html'));
+							countdownBot.hello(response);
+		  					res.sendFile(path.join(__dirname + '/public/thanks.html'));
+		  				});
+  					}
   				});
   			}
   		});

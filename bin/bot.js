@@ -28,7 +28,7 @@ mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWO
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('connected to DB!')
+  console.log('connected to DB!', db)
 });
 
 app.use("/public", express.static(__dirname));

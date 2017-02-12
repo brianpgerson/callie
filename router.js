@@ -33,12 +33,8 @@ module.exports = function(app, db) {
   				const teamId = response.team_id;
           console.log('response: ', response);
 
-          Bot.find({}).then(function(allBots) {
-            console.log('all bots: ' + allBots);
-          })
-
   				Bot.find({teamId: teamId}).then(function (bot) {
-            console.log('bot:', bot, 'teamId:', teamId);
+            console.log(arguments);
   					if (bot) {
               console.error('bot already exists for team', teamId);
   						res.sendFile(path.join(__dirname + '/public/oops.html'));

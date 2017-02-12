@@ -31,9 +31,10 @@ module.exports = function(app, db) {
   				const botAccessToken = response.bot.bot_access_token;
   				const botId = response.bot.bot_user_id;
   				const teamId = response.team_id;
-
+          console.log(response);
   				Bot.find({teamId: teamId}).then(function (bot) {
   					if (bot) {
+              console.error('bot already exists for team', teamId);
   						res.sendFile(path.join(__dirname + '/public/oops.html'));
   					} else {
   						const bot = new Bot({

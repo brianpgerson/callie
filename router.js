@@ -31,7 +31,12 @@ module.exports = function(app, db) {
   				const botAccessToken = response.bot.bot_access_token;
   				const botId = response.bot.bot_user_id;
   				const teamId = response.team_id;
-          console.log(response);
+          console.log('response: ' + response);
+
+          Bot.find({}).then(function(allBots) {
+            console.log('all bots: ' + allBots);
+          })
+
   				Bot.find({teamId: teamId}).then(function (bot) {
   					if (bot) {
               console.error('bot already exists for team', teamId);

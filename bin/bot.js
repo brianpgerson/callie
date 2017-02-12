@@ -42,8 +42,6 @@ router(app, db);
 
 Bot.find({}).then(function (bots) {
 	_.each(bots, function(bot) {
-		console.log(bot);
-
 		var bootUpBot = new CountdownBot({
 			token: bot.botAccessToken,
 			db: db,

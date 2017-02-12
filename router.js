@@ -32,7 +32,7 @@ module.exports = function(app, db) {
   				const botId = response.bot.bot_user_id;
   				const teamId = response.team_id;
 
-  				Bot.find({teamId: team}).then(function (bot) {
+  				Bot.find({teamId: teamId}).then(function (bot) {
   					if (bot) {
   						res.sendFile(path.join(__dirname + '/public/oops.html'));
   					} else {

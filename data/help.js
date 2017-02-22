@@ -12,11 +12,11 @@ You can then ask for the countdown like so: \`@callie countdown: <event name>\`.
 
 I also give weekly or daily countdown reminders. You can set those by saying:
 
-\`@callie schedule: <weekly or daily>, day: <day of week>, hour: <hour in military time>\`
+\`@callie schedule: <weekly or daily>, day: <day of week>, event: <event name>, hour: <hour in military time>\`
 
 If you set it for daily, simply ignore the day setting, like so:
 
-\`@callie schedule: daily, hour: <hour in military time>\`
+\`@callie schedule: daily, event: <event name>, hour: <hour in military time>\`
 
 Hour is optional as well, and will default to 10am (Pacific).
 

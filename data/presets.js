@@ -2,7 +2,7 @@
 
 const help = require('./help'),
 	  sayHello = require('./sayHello'),
-	  cities = require('./cities'),
+	  cities = require('./cities');
 
 module.exports = {
 	help: help,

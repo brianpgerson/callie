@@ -4,13 +4,6 @@
 // require('dotenv').config();
 
 
-// TODOS:
-/*
-* LIST OF LENGTH ZERO EVENTS
-*
-*
-*
-*/
 const CountdownBot = require('../lib/countdown'),
 		cities = require('../data/cities'),
 		mongoose = require('mongoose'),
@@ -54,6 +47,8 @@ Bot.find({}).then(function (bots) {
 			if (_.get(countdown, 'schedule.active')) {
 				bootUpBot.handleNewChronJob(countdown);
 			}
+		}).catch(function(err) {
+			console.log(err, bot.botAccessToken);
 		});
 	});
 });

@@ -41,8 +41,6 @@ Bot.find({}).then(function (bots) {
 			name: 'callie'
 		});
 
-		console.log(`bootupBot is ${bootUpBot}, id is ${bot.botAccessToken}`);
-
 		bootUpBot.run();
 
 		Countdown.find({botId: bot.botAccessToken}).then(function(countdown) {

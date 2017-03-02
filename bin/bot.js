@@ -39,7 +39,9 @@ Bot.find({}).then(function (bots) {
 			token: bot.botAccessToken,
 			db: db,
 			name: 'callie'
-		})
+		});
+
+		console.log(`bootupBot is ${bootUpBot}, id is ${bot.botAccessToken}`);
 
 		bootUpBot.run();
 

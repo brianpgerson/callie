@@ -1,7 +1,7 @@
 'use strict';
 
 // I use dotenv to manage config vars. remove below if you do not.
-require('dotenv').config();
+// require('dotenv').config();
 
 
 const CountdownBot = require('../lib/countdown'),
@@ -13,10 +13,6 @@ const CountdownBot = require('../lib/countdown'),
 		Countdown = require('../lib/models/countdown'),
 		express = require('express'),
 		app = express();
-
-function isTestMode() {
-	return process.env.NODE_ENV === 'test_env';
-}
 
 mongoose.Promise = require('bluebird');
 const prodDB = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}:@jello.modulusmongo.net:27017/t2ipixUp`;
@@ -33,15 +29,43 @@ db.once('open', function() {
 app.use("/public", express.static(__dirname));
 
 app.listen(process.env.PORT || 1337, function(){
-  console.log(`Express server listening on port ${this.address().port} in %s mode`);
+  console.log(`Express server listening on port ${this.address().port}`);
 });
 
-console.log(`Your server is running on port 1337.`);
 router(app, db);
 
 if (isTestMode()) {
+	bootUpTestModeBot();
+} else {
+	Bot.find({}).then(function (bots) {
+		restartBots(bots);
+	});
+}
+
+function restartBots (bots) {
+	_.each(bots, function(bot) {
+		var bootUpBot = new CountdownBot({
+			token: bot.botAccessToken,
+			db: db,
+			name: 'callie'
+		});
+
+		bootUpBot.run();
+
+		Countdown.find({botId: bot.botAccessToken}).then(function(countdown) {
+			const channel = _.get(countdown, 'schedule.channel');
+			const isActive = _.get(countdown, 'schedule.active');
+			if (isActive && channel) {
+				bootUpBot.handleNewChronJob(countdown, {channel: channel});
+			}
+		}).catch(function(err) {
+			console.log(err, bot.botAccessToken);
+		});
+	});
+}
+
+function bootUpTestModeBot () {
 	Bot.findOneAndRemove({userId: 'testbotkey'}).then(function() {
-		console.log(process.env.TEST_BOT_KEY, process.env.TEST_TEAM_ID);
 		const bot = new Bot({
 			botAccessToken: process.env.TEST_BOT_KEY,
 			userId: 'testbotkey',
@@ -49,7 +73,6 @@ if (isTestMode()) {
 		});
 
 		bot.save().then(function (bot) {
-			console.log('bot', bot);
 			const countdownBot = new CountdownBot({
 				token: process.env.TEST_BOT_KEY,
 				db: db,
@@ -58,26 +81,9 @@ if (isTestMode()) {
 			countdownBot.run();
 		});
 	});
-} else {
-	Bot.find({}).then(function (bots) {
-		_.each(bots, function(bot) {
-			var bootUpBot = new CountdownBot({
-				token: bot.botAccessToken,
-				db: db,
-				name: 'callie'
-			});
-
-			bootUpBot.run();
-
-			Countdown.find({botId: bot.botAccessToken}).then(function(countdown) {
-				if (_.get(countdown, 'schedule.active')) {
-					bootUpBot.handleNewChronJob(countdown);
-				}
-			}).catch(function(err) {
-				console.log(err, bot.botAccessToken);
-			});
-		});
-	});
-
 }
 
+
+function isTestMode() {
+	return process.env.NODE_ENV === 'test_env';
+}

@@ -51,10 +51,6 @@ module.exports = function(app, db) {
 							});
 
 							countdownBot.run();
-							const channel = _.get(response, 'incoming_webhook.channel');
-							if (channel) {
-								countdownBot.hello(channel);
-							}
 
 							countdownBot.hello(response);
 		  					res.sendFile(path.join(__dirname + '/public/thanks.html'));

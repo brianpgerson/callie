@@ -45,14 +45,17 @@ module.exports = function(app, db) {
 
 		  				bot.save().then(function (bot) {
 		  					const countdownBot = new CountdownBot({
-		    					token: botAccessToken,
-		    					db: db,
-		    					name: 'callie'
-							});
+  		    					token: botAccessToken,
+  		    					db: db,
+  		    					name: 'callie'
+  							});
 
-							countdownBot.run();
+  							countdownBot.run();
+                const channel = _.get(response, 'incoming_webhook.channel');
+                if (channel) {
+                  countdownBot.hello(channel);
+                }
 
-							countdownBot.hello(response);
 		  					res.sendFile(path.join(__dirname + '/public/thanks.html'));
 		  				});
   					}

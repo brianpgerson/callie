@@ -10,7 +10,7 @@ To start your countdown, simply say:
 
 I'll let you know if you got it right! To reset the same countdown with a new date or destination, just use the same command with \`reset\` instead of \`start\`.
 
-You can then ask for the countdown like so: \`@callie countdown: <event name>\`.
+You can then ask for the countdown like so: \`@callie countdown: <event name>\`. If you'd like to see all of your countdowns, just say \`@callie list\`.
 
 I also give weekly or daily countdown reminders. You can set those by saying:
 

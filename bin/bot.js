@@ -55,14 +55,12 @@ function restartBots (bots) {
 		Countdown.find({botId: bot.userId}).then(function(countdowns) {
 			_.forEach(countdowns, function (countdown) {
 				console.log(countdown.event);
-				if (utils.hasGarbageInputs(countdown)) {
-					bootUpBot.updateCountdown(countdown);
-				} else {
-					const channel = _.get(countdown, 'schedule.channel');
-					if (!_.isUndefined(channel)) {
-						bootUpBot.handleNewChronJob(countdown, {channel: channel});
-					}
+
+				const channel = _.get(countdown, 'schedule.channel');
+				if (!_.isUndefined(channel)) {
+					bootUpBot.handleNewChronJob(countdown, {channel: channel});
 				}
+
 			});
 		}).catch(function(err) {
 			console.log(err, bot.botAccessToken);

@@ -53,7 +53,7 @@ function restartBots (bots) {
 
 		bootUpBot.run();
 
-		Countdown.find({botId: bot.botAccessToken}).then(function(countdowns) {
+		Countdown.find({}).then(function(countdowns) {
 			_.forEach(countdowns, function (countdown) {
 				console.log(countdown.event);
 				if (utils.hasGarbageInputs(countdown)) {

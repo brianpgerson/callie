@@ -12,6 +12,7 @@ const CountdownBot = require('../lib/countdown'),
 		_ = require('lodash'),
 		Countdown = require('../lib/models/countdown'),
 		express = require('express'),
+		utils = require('../lib/utils'),
 		app = express();
 
 mongoose.Promise = require('bluebird');
@@ -52,11 +53,18 @@ function restartBots (bots) {
 
 		bootUpBot.run();
 
-		Countdown.find({botId: bot.botAccessToken}).then(function(countdown) {
-			const channel = _.get(countdown, 'schedule.channel');
-			if (!_.isUndefined(channel)) {
-				bootUpBot.handleNewChronJob(countdown, {channel: channel});
-			}
+		Countdown.find({botId: bot.botAccessToken}).then(function(countdowns) {
+			_.forEach(countdowns, function (countdown) {
+				console.log(countdown.event);
+				if (utils.hasGarbageInputs(countdown)) {
+					bootUpBot.updateCountdown(countdown);
+				} else {
+					const channel = _.get(countdown, 'schedule.channel');
+					if (!_.isUndefined(channel)) {
+						bootUpBot.handleNewChronJob(countdown, {channel: channel});
+					}
+				}
+			});
 		}).catch(function(err) {
 			console.log(err, bot.botAccessToken);
 		});

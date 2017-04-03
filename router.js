@@ -54,6 +54,8 @@ module.exports = function(app, db) {
                 const channel = _.get(response, 'incoming_webhook.channel');
                 if (channel) {
                   countdownBot.hello(channel);
+                } else {
+                  console.log('no channel for some reason!');
                 }
 
 		  					res.sendFile(path.join(__dirname + '/public/thanks.html'));

@@ -54,8 +54,7 @@ function restartBots (bots) {
 
 		Countdown.find({botId: bot.botAccessToken}).then(function(countdown) {
 			const channel = _.get(countdown, 'schedule.channel');
-			const isActive = _.get(countdown, 'schedule.active');
-			if (isActive && channel) {
+			if (!_.isUndefined(channel)) {
 				bootUpBot.handleNewChronJob(countdown, {channel: channel});
 			}
 		}).catch(function(err) {
@@ -73,6 +72,7 @@ function bootUpTestModeBot () {
 		});
 
 		bot.save().then(function (bot) {
+			console.log(bot);
 			const countdownBot = new CountdownBot({
 				token: process.env.TEST_BOT_KEY,
 				db: db,

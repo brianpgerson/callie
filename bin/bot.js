@@ -60,7 +60,7 @@ function restartBots (bots) {
 					console.log('restarting chron:', countdown.event);
 					bootUpBot.handleNewChronJob(countdown, {channel: channel});
 				}
-				console.log('done');
+				console.log('done', countdown.event);
 			});
 		}).catch(function(err) {
 			console.log(err, bot.botAccessToken);

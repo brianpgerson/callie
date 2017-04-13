@@ -51,10 +51,7 @@ module.exports = function(app, db) {
   							});
 
   							countdownBot.run();
-                console.log("response", response);
-
-                const channel = _.get(response, 'incoming_webhook.channel');
-                console.log("channel", channel)
+                const channel = _.get(response, 'incoming_webhook.channel_id');
                 if (channel) {
                   countdownBot.hello(channel);
                 } else {

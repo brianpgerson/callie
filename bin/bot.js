@@ -1,7 +1,7 @@
 'use strict';
 
 // I use dotenv to manage config vars. remove below if you do not.
-require('dotenv').config();
+// require('dotenv').config();
 
 
 const CountdownBot = require('../lib/countdown'),
@@ -57,7 +57,7 @@ function restartBots (bots) {
 				console.log('booting up:', countdown.event);
 				const channel = _.get(countdown, 'schedule.channel');
 				if (!_.isUndefined(channel)) {
-					console.log('restarting chron:', countdown.event);
+					console.log('restarting chron:', countdown);
 					bootUpBot.handleNewChronJob(countdown, {channel: channel}, {team: countdown.teamId});
 				}
 				console.log('done', countdown.event);

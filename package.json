@@ -4,7 +4,8 @@
   "description": "It counts down",
   "main": "lib/countdown.js",
   "scripts": {
-    "start": ""
+    "start": "node bin/bot.js",
+    "start-dev": "NODE_ENV=test_env node bin/bot.js"
   },
   "author": "Brian Gerson",
   "license": "ISC",

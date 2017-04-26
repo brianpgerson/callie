@@ -5,6 +5,7 @@
   "main": "lib/countdown.js",
   "scripts": {
     "start": "node bin/bot.js",
+    "test": "mocha -S --ui bdd --require ./tests/spec_helper.js --recursive ./tests --reporter spec",
     "start-dev": "NODE_ENV=test_env node bin/bot.js"
   },
   "author": "Brian Gerson",

@@ -31,6 +31,7 @@ module.exports = function(app, db) {
   				const botAccessToken = response.bot.bot_access_token;
   				const botId = response.bot.bot_user_id;
   				const teamId = response.team_id;
+          const teamName = response.team_name;
 
   				Bot.findOne({teamId: teamId}).then(function (bot) {
   					if (bot) {
@@ -40,7 +41,8 @@ module.exports = function(app, db) {
   						const bot = new Bot({
 		  					botAccessToken: botAccessToken,
 		  					userId: botId,
-		  					teamId: teamId
+		  					teamId: teamId,
+                teamName: teamName
 		  				});
 
 		  				bot.save().then(function (bot) {

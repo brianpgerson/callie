@@ -18,9 +18,8 @@ const CountdownBot = require('../lib/countdown'),
 
 mongoose.Promise = require('bluebird');
 const testDb = `mongodb://localhost/countdown-test`;
-const newDb = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds123991-a0.mlab.com:23991,ds123991-a1.mlab.com:23991/callie?replicaSet=rs-ds123991`;
-const prodDB = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}:@jello.modulusmongo.net:27017/t2ipixUp`;
-const databaseUrl = isTestMode() ? testDb : newDb;
+const prodDb = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds123991-a0.mlab.com:23991,ds123991-a1.mlab.com:23991/callie?replicaSet=rs-ds123991`;
+const databaseUrl = isTestMode() ? testDb : prodDb;
 
 mongoose.connect(databaseUrl);
 

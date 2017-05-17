@@ -58,7 +58,7 @@ function restartBots (bots) {
 			_.forEach(countdowns, function (countdown) {
 				console.log('booting up:', countdown.event);
 				const channel = _.get(countdown, 'schedule.channel');
-				if (!_.isUndefined(channel)) {
+				if (!_.isUndefined(channel) && utils.eventPassed(countdown.date)) {
 					console.log('restarting chron:', countdown.event);
 					bootUpBot.handleNewChronJob(countdown, {channel: channel, team: countdown.teamId});
 				}

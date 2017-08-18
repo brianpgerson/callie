@@ -47,13 +47,20 @@ if (isTestMode()) {
 
 function restartBots (bots) {
 	_.each(bots, function(bot) {
+		console.log('booting up bot', bot.teamName, bot.teamId);
+	
 		var bootUpBot = new CountdownBot({
 			token: bot.botAccessToken,
 			db: db,
 			name: 'callie'
 		});
 
+		console.log('running bot', bot.teamName, bot.teamId);
+
 		bootUpBot.run();
+
+		console.log('done running bot');
+
 		Countdown.find({botId: bot.userId}).then(function(countdowns) {
 			_.forEach(countdowns, function (countdown) {
 				console.log('booting up:', countdown.event);

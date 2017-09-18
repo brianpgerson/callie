@@ -1,26 +1,25 @@
 'use strict';
 
 // I use dotenv to manage config vars. remove below if you do not.
-// require('dotenv').config();
-
+require('dotenv').config();
 
 const CountdownBot = require('../lib/countdown'),
-		cities = require('../data/cities'),
-		mongoose = require('mongoose'),
-		router = require('../router'),
-		Bot = require('../lib/models/bot'),
-		_ = require('lodash'),
-		Countdown = require('../lib/models/countdown'),
-		express = require('express'),
-		utils = require('../lib/utils'),
-		app = express();
+			cities = require('../data/cities'),
+		  mongoose = require('mongoose'),
+			router = require('../router'),
+			   Bot = require('../lib/models/bot'),
+				 _ = require('lodash'),
+			 Relax = require('relax-js'),
+		 Countdown = require('../lib/models/countdown'),
+		   express = require('express'),
+			 utils = require('../lib/utils'),
+			   app = express();
 
 
 mongoose.Promise = require('bluebird');
 const testDb = `mongodb://localhost/countdown-test`;
 const prodDb = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds123991-a0.mlab.com:23991,ds123991-a1.mlab.com:23991/callie?replicaSet=rs-ds123991`;
 const databaseUrl = isTestMode() ? testDb : prodDb;
-
 mongoose.connect(databaseUrl);
 
 const db = mongoose.connection;
@@ -37,64 +36,48 @@ app.listen(process.env.PORT || 1337, function(){
 
 router(app, db);
 
-if (isTestMode()) {
-	bootUpTestModeBot();
-} else {
-	Bot.find({}).then(function (bots) {
-		restartBots(bots);
+const relax = new Relax();
+setup(relax);
+restartBots();
+
+// new Bot({
+// 		botAccessToken: process.env.TEST_BOT_KEY,
+// 		userId: 'brian',
+// 		teamId: process.env.TEST_TEAM_ID,
+// 		teamName: 'hoorayyyy'
+// 	}).save();
+
+function restartBots () {
+	Bot.find({}).then(bots => {
+		let addedBots = {};
+		_.forEach(bots, function (bot) {
+			console.log('booting up:', bot.teamName, bot.teamId);
+
+			if (_.isUndefined(addedBots[bot.teamId])) {
+				const botAccessToken = _.get(bot, 'botAccessToken');
+				const teamId = _.get(bot, 'teamId');
+
+				relax.createBot(teamId, botAccessToken);
+				addedBots[teamId] = true;
+
+				console.log(`done for ${bot.teamName}`);
+			} else {
+				console.log(`this is odd: more than one bot found for ${bot.teamId}`)
+			}
+		});
+	}).catch(function(err) {
+		console.log('error during boot:', err, countdown.botId);
 	});
 }
 
-function restartBots (bots) {
-	_.each(bots, function(bot) {
-		console.log('booting up bot', bot.teamName, bot.teamId);
-	
-		var bootUpBot = new CountdownBot({
-			token: bot.botAccessToken,
-			db: db,
-			name: 'callie'
-		});
-
-		console.log('running bot', bot.teamName, bot.teamId);
-
-		bootUpBot.run();
-
-		console.log('done running bot');
-
-		Countdown.find({botId: bot.userId}).then(function(countdowns) {
-			_.forEach(countdowns, function (countdown) {
-				console.log('booting up:', countdown.event);
-				const channel = _.get(countdown, 'schedule.channel');
-				if (!_.isUndefined(channel) && !utils.eventPassed(countdown)) {
-					console.log('restarting chron:', countdown.event);
-					bootUpBot.handleNewChronJob(countdown, {channel: channel, team: countdown.teamId});
-				}
-				console.log('done:', countdown.event);
-			});
-		}).catch(function(err) {
-			console.log(err, bot.botAccessToken);
-		});
+function setup (relax) {
+	relax.on('message_new', function (data) {
+  		CountdownBot.onMessage(data);
 	});
-}
 
-function bootUpTestModeBot () {
-	Bot.findOneAndRemove({userId: 'testbotkey'}).then(function() {
-		const bot = new Bot({
-			botAccessToken: process.env.TEST_BOT_KEY,
-			userId: 'testbotkey',
-			teamId: process.env.TEST_TEAM_ID
-		});
+	relax.on('disable_bot', data => console.log('failed', data))
 
-		bot.save().then(function (bot) {
-			console.log(bot);
-			const countdownBot = new CountdownBot({
-				token: process.env.TEST_BOT_KEY,
-				db: db,
-				name: 'callietest'
-			});
-			countdownBot.run();
-		});
-	});
+	relax.start();
 }
 
 

@@ -37,7 +37,8 @@ app.listen(process.env.PORT || 1337, function(){
 router(app, db);
 
 const relax = new Relax();
-setup(relax);
+const countdownBot = new CountdownBot();
+setup(relax, countdownBot);
 restartBots();
 
 // new Bot({
@@ -70,9 +71,9 @@ function restartBots () {
 	});
 }
 
-function setup (relax) {
+function setup (relax, countdownBot) {
 	relax.on('message_new', function (data) {
-  		CountdownBot.onMessage(data);
+  		countdownBot.onMessage(data);
 	});
 
 	relax.on('disable_bot', data => console.log('failed', data))

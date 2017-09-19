@@ -7,7 +7,7 @@ const express = require('express'),
 	    Slack = require('slack-node');
 
 
-module.exports = function(app, db) {
+module.exports = function(app, db, relax, countdownBot) {
 	slack = new Slack();
   	// Initializing route groups
 
@@ -45,19 +45,14 @@ module.exports = function(app, db) {
                 teamName: teamName
 		  				});
 
-		  				bot.save().then(function (bot) {
-		  					const countdownBot = new CountdownBot({
-  		    					token: botAccessToken,
-  		    					db: db,
-  		    					name: 'callie'
-  							});
+		  				bot.save().then(bot => {
+		  					relax.createBot(teamId, botAccessToken);
 
-  							countdownBot.run();
                 console.log('response', response);
                 const channel = _.get(response, 'incoming_webhook.channel_id');
                 console.log('channel', channel);
                 if (channel) {
-                  countdownBot.hello(channel);
+                  countdownBot.hello(channel, botAccessToken);
                 } else {
                   console.log('no channel for some reason!');
                 }

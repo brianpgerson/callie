@@ -34,19 +34,16 @@ app.listen(process.env.PORT || 1337, function(){
   console.log(`Express server listening on port ${this.address().port}`);
 });
 
-router(app, db);
-
 const relax = new Relax();
 const countdownBot = new CountdownBot();
-setup(relax, countdownBot);
-restartBots();
 
-// new Bot({
-// 		botAccessToken: process.env.TEST_BOT_KEY,
-// 		userId: 'brian',
-// 		teamId: process.env.TEST_TEAM_ID,
-// 		teamName: 'hoorayyyy'
-// 	}).save();
+setup(relax, countdownBot);
+router(app, db, relax, countdownBot);
+
+restartBots();
+setTimeout(function() {
+	countdownBot.initiateScheduler();
+}, 1000);
 
 function restartBots () {
 	Bot.find({}).then(bots => {

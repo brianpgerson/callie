@@ -40,7 +40,6 @@ const countdownBot = new CountdownBot();
 setup(countdownBot);
 
 setTimeout(function() {
-	relax.start();
 	countdownBot.initiateScheduler();
 }, 1000);
 
@@ -52,7 +51,8 @@ function setup (countdownBot) {
 	});
 
 	relax.on('disable_bot', data => console.log('failed', data))
-
+	relax.start();
+	
 	router(app, db, relax, countdownBot);
 	restartBots();
 }

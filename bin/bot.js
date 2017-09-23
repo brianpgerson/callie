@@ -64,7 +64,7 @@ function restartBots () {
 			}
 		});
 	}).catch(function(err) {
-		console.log('error during boot:', err, bot.teamId, bot.teamName);
+		console.log('error during boot:', err);
 	});
 }
 

@@ -1,7 +1,7 @@
 'use strict';
 
 // I use dotenv to manage config vars. remove below if you do not.
-require('dotenv').config();
+// require('dotenv').config();
 
 const CountdownBot = require('../lib/countdown'),
 			cities = require('../data/cities'),
@@ -17,7 +17,7 @@ const CountdownBot = require('../lib/countdown'),
 
 
 mongoose.Promise = require('bluebird');
-const testDb = `mongodb://localhost/countdown-test`;
+const testDb = `mongodb://${process.env.TEST_MONGO_USER}:${process.env.TEST_MONGO_PASSWORD}@ds147274.mlab.com:47274/callie-test`;
 const prodDb = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ds123991-a0.mlab.com:23991,ds123991-a1.mlab.com:23991/callie?replicaSet=rs-ds123991`;
 const databaseUrl = isTestMode() ? testDb : prodDb;
 mongoose.connect(databaseUrl);

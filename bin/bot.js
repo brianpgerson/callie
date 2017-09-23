@@ -51,7 +51,13 @@ function setup (countdownBot) {
   		countdownBot.onMessage(data);
 	});
 
-	relax.on('disable_bot', data => console.log('failed', data))
+	relax.on('disable_bot', data => {
+		console.log('time to delete a bot', data.team_uid);
+		Bot.remove({teamId: data.team_uid}).then(deleted => {
+			console.log('removed bot', data.team_uid);
+		})
+
+	})
 	relax.start();
 
 	let redis = Redis.createClient({url: process.env.REDIS_URL});

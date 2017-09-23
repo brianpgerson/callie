@@ -55,7 +55,7 @@ function restartBots () {
 
 				console.log(botAccessToken, teamId);
 
-				relax.startBot(teamId, botAccessToken);
+				relax.createBot(teamId, botAccessToken);
 				addedBots[teamId] = true;
 
 				console.log(`done for ${bot.teamName}`);
@@ -77,8 +77,6 @@ function setup (relax, countdownBot) {
 	relax.on('disable_bot', data => console.log('failed', data))
 
 	relax.start();
-
-	console.log('started for', relax);
 	router(app, db, relax, countdownBot);
 	restartBots();
 }

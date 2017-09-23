@@ -73,6 +73,7 @@ function restartBots (redis) {
 
 			var hsetPayload = { team_id: teamId, token: botAccessToken };
     		var pubsubPayload = { team_id: teamId, type: 'team_added' }
+    		var key = teamId;
 
     		if (!process.env.RELAX_BOTS_KEY || !process.env.RELAX_BOTS_PUBSUB) {
     			console.log("OUCH!", process.env.RELAX_BOTS_KEY, process.env.RELAX_BOTS_PUBSUB)

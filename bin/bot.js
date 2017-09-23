@@ -1,7 +1,7 @@
 'use strict';
 
 // I use dotenv to manage config vars. remove below if you do not.
-// require('dotenv').config();
+require('dotenv').config();
 
 const CountdownBot = require('../lib/countdown'),
 			cities = require('../data/cities'),
@@ -37,38 +37,15 @@ app.listen(process.env.PORT || 1337, function(){
 const relax = new Relax();
 const countdownBot = new CountdownBot();
 
-setup(relax, countdownBot);
+setup(countdownBot);
 
 setTimeout(function() {
+	relax.start();
 	countdownBot.initiateScheduler();
 }, 1000);
 
-function restartBots () {
-	Bot.find({}).then(bots => {
-		let addedBots = {};
-		_.forEach(bots, function (bot) {
-			console.log('booting up:', bot.teamName, bot.teamId);
 
-			if (_.isUndefined(addedBots[bot.teamId])) {
-				const botAccessToken = _.get(bot, 'botAccessToken');
-				const teamId = _.get(bot, 'teamId');
-
-				console.log(botAccessToken, teamId);
-
-				relax.createBot(teamId, botAccessToken);
-				addedBots[teamId] = true;
-
-				console.log(`done for ${bot.teamName}`);
-			} else {
-				console.log(`this is odd: more than one bot found for ${bot.teamId}`)
-			}
-		});
-	}).catch(function(err) {
-		console.log('error during boot:', err);
-	});
-}
-
-function setup (relax, countdownBot) {
+function setup (countdownBot) {
 	relax.on('message_new', function (data) {
 		console.log(data);
   		countdownBot.onMessage(data);
@@ -76,11 +53,30 @@ function setup (relax, countdownBot) {
 
 	relax.on('disable_bot', data => console.log('failed', data))
 
-	relax.start();
 	router(app, db, relax, countdownBot);
 	restartBots();
 }
 
+function restartBots () {
+	Bot.find({}).then(bots => {
+		let addedBots = {};
+		console.log(bots.length, 'bots to boot up');
+	
+		_.forEach(bots, function (bot) {
+			console.log('booting up:', bot.teamName, bot.teamId);
+
+			const botAccessToken = _.get(bot, 'botAccessToken');
+			const teamId = _.get(bot, 'teamId');
+
+			relax.createBot(teamId, botAccessToken);
+			addedBots[teamId] = true;
+
+			console.log(`done for ${bot.teamName}`);
+		});
+	}).catch(function(err) {
+		console.log('error during boot:', err);
+	});
+}
 
 function isTestMode() {
 	return process.env.NODE_ENV === 'test_env';

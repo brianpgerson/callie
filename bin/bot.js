@@ -46,7 +46,6 @@ setTimeout(function() {
 
 function setup (countdownBot) {
 	relax.on('message_new', function (data) {
-		console.log(data);
   		countdownBot.onMessage(data);
 	});
 

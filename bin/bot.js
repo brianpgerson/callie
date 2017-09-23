@@ -55,7 +55,7 @@ function restartBots () {
 
 				console.log(botAccessToken, teamId);
 
-				relax.createBot(teamId, botAccessToken);
+				relax.startBot(teamId, botAccessToken);
 				addedBots[teamId] = true;
 
 				console.log(`done for ${bot.teamName}`);

@@ -55,6 +55,8 @@ function restartBots () {
 				const botAccessToken = _.get(bot, 'botAccessToken');
 				const teamId = _.get(bot, 'teamId');
 
+				console.log(botAccessToken, teamId);
+
 				relax.createBot(teamId, botAccessToken);
 				addedBots[teamId] = true;
 

@@ -76,6 +76,8 @@ function setup (relax, countdownBot) {
 
 	relax.on('disable_bot', data => console.log('failed', data))
 
+	console.log('starting for', relax, countdownBot);
+
 	relax.start();
 }
 

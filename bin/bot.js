@@ -13,7 +13,6 @@ const CountdownBot = require('../lib/countdown'),
 		 Countdown = require('../lib/models/countdown'),
 		   express = require('express'),
 			 utils = require('../lib/utils'),
-			 Redis = require('redis'),
 			   app = express();
 
 
@@ -55,18 +54,16 @@ function setup (countdownBot) {
 		console.log('time to delete a bot', data.team_uid);
 		Bot.remove({teamId: data.team_uid}).then(deleted => {
 			console.log('removed bot', data.team_uid);
-		})
+		});
+	});
 
-	})
 	relax.start();
 
-	let redis = Redis.createClient({url: process.env.REDIS_URL});
-
 	router(app, db, relax, countdownBot);
-	restartBots(redis);
+	restartBots();
 }
 
-function restartBots (redis) {
+function restartBots () {
 	Bot.find({}).then(bots => {
 		let addedBots = {};
 		console.log(bots.length, 'bots to boot up');
@@ -77,19 +74,7 @@ function restartBots (redis) {
 			const botAccessToken = _.get(bot, 'botAccessToken');
 			const teamId = _.get(bot, 'teamId');
 
-			var hsetPayload = { team_id: teamId, token: botAccessToken };
-    		var pubsubPayload = { team_id: teamId, type: 'team_added' }
-    		var key = teamId;
-
-    		if (!process.env.RELAX_BOTS_KEY || !process.env.RELAX_BOTS_PUBSUB) {
-    			console.log("OUCH!", process.env.RELAX_BOTS_KEY, process.env.RELAX_BOTS_PUBSUB)
-    		}
-
-			redis.multi()
-		      .hset(process.env.RELAX_BOTS_KEY, key, JSON.stringify(hsetPayload))
-		      .publish(process.env.RELAX_BOTS_PUBSUB, JSON.stringify(pubsubPayload))
-		      .exec();
-
+			relax.createBot(teamId, botAccessToken);
 			addedBots[teamId] = true;
 
 			console.log(`done for ${bot.teamName}`);

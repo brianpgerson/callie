@@ -13,7 +13,7 @@ const CountdownBot = require('../lib/countdown'),
 		 Countdown = require('../lib/models/countdown'),
 		   express = require('express'),
 			 utils = require('../lib/utils'),
-			 Redis = require('redis');
+			 Redis = require('redis'),
 			   app = express();
 
 

@@ -53,9 +53,9 @@ function setup (countdownBot) {
 
 	relax.on('disable_bot', data => {
 		console.log('time to delete a bot', data.team_uid);
-		Bot.remove({teamId: data.team_uid}).then(deleted => {
-			console.log('removed bot', data.team_uid);
-		})
+		// Bot.remove({teamId: data.team_uid}).then(deleted => {
+		// 	console.log('removed bot', data.team_uid);
+		// })
 
 	})
 	relax.start();

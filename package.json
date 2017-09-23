@@ -20,6 +20,7 @@
     "node-schedule": "^1.2.0",
     "nodemon": "^1.11.0",
     "path": "^0.12.7",
+    "relax-js": "0.0.1",
     "serve-static": "^1.11.1",
     "slack-node": "^0.1.8",
     "slackbots": "^1.0.2"

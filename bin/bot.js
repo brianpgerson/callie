@@ -70,6 +70,7 @@ function restartBots () {
 
 function setup (relax, countdownBot) {
 	relax.on('message_new', function (data) {
+		console.log(data);
   		countdownBot.onMessage(data);
 	});
 

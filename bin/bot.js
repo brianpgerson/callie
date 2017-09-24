@@ -13,6 +13,7 @@ const CountdownBot = require('../lib/countdown'),
 		 Countdown = require('../lib/models/countdown'),
 		   express = require('express'),
 			 utils = require('../lib/utils'),
+			 Redis = require('redis'),
 			   app = express();
 
 
@@ -36,7 +37,7 @@ app.listen(process.env.PORT || 1337, function(){
 
 const relax = new Relax();
 const countdownBot = new CountdownBot();
-
+const redis = Redis.createClient({url: process.env.REDIS_URL});
 setup(countdownBot);
 
 setTimeout(function() {
@@ -52,7 +53,14 @@ function setup (countdownBot) {
 	relax.on('disable_bot', data => {
 		console.log('time to delete a bot', data.team_uid);
 		Bot.remove({teamId: data.team_uid}).then(deleted => {
-			console.log('removed bot', data.team_uid);
+			
+			redis.multi()
+		      .hdel(process.env.RELAX_BOTS_KEY, key)
+		      .exec();
+
+			console.log('removed bot', deleted, data.team_uid);
+
+
 		});
 	});
 

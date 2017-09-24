@@ -55,7 +55,7 @@ function setup (countdownBot) {
 		Bot.remove({teamId: data.team_uid}).then(deleted => {
 			
 			redis.multi()
-		      .hdel(process.env.RELAX_BOTS_KEY, key)
+		      .hdel(process.env.RELAX_BOTS_KEY, data.team_uid)
 		      .exec();
 
 			console.log('removed bot', deleted, data.team_uid);

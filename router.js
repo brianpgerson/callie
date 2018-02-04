@@ -52,7 +52,7 @@ module.exports = function(app, db, relax, countdownBot) {
                 const channel = _.get(response, 'incoming_webhook.channel_id');
                 console.log('channel', channel);
                 if (channel) {
-                  countdownBot.hello(channel, botAccessToken);
+                  countdownBot.hello({channel: channel}, botAccessToken);
                 } else {
                   console.log('no channel for some reason!');
                 }

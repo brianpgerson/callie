@@ -37,7 +37,11 @@ app.listen(process.env.PORT || 1337, function(){
 
 const relax = new Relax();
 const countdownBot = new CountdownBot();
-const redis = Redis.createClient({url: process.env.REDIS_URL});
+// console.log(`Creating redis connection at ${process.env.REDIS_URL}`);
+// const redis = Redis.createClient({
+// 	url: process.env.REDIS_URL
+// });
+
 setup(countdownBot);
 
 setTimeout(function() {
@@ -46,7 +50,9 @@ setTimeout(function() {
 
 
 function setup (countdownBot) {
+	console.log('setting up the old relax bot');
 	relax.on('message_new', function (data) {
+		console.log('in relax callback with a message', data);
   		countdownBot.onMessage(data);
 	});
 
@@ -54,9 +60,9 @@ function setup (countdownBot) {
 		console.log('time to delete a bot', data.team_uid);
 		Bot.remove({teamId: data.team_uid}).then(deleted => {
 			
-			redis.multi()
-		      .hdel(process.env.RELAX_BOTS_KEY, data.team_uid)
-		      .exec();
+			// redis.multi()
+		 //      .hdel(process.env.RELAX_BOTS_KEY, data.team_uid)
+		 //      .exec();
 
 			console.log('removed bot', deleted, data.team_uid);
 
@@ -73,18 +79,21 @@ function setup (countdownBot) {
 function restartBots () {
 	Bot.find({}).then(bots => {
 		let addedBots = {};
-		console.log(bots.length, 'bots to boot up');
 	
+		console.log(`Found ${bots.length} bots`);
+		let done = 0;
+
 		_.forEach(bots, function (bot) {
-			console.log('booting up:', bot.teamName, bot.teamId);
+			// console.log('booting up:', bot.teamName, bot.teamId);
 
 			const botAccessToken = _.get(bot, 'botAccessToken');
 			const teamId = _.get(bot, 'teamId');
 
 			relax.createBot(teamId, botAccessToken);
 			addedBots[teamId] = true;
+			done++;
 
-			console.log(`done for ${bot.teamName}`);
+			// console.log(`${done} out of ${bots.length} bots done. last: ${bot.teamName}`);
 		});
 	}).catch(function(err) {
 		console.log('error during boot:', err);

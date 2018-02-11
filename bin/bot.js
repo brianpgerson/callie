@@ -53,7 +53,7 @@ slackEvents.on('message.channels', (event) => {
 
 slackEvents.on('app_mention', (event) => {
 	console.log('hey, a message of some type:', event)
-	console.log('all the args: ', args)
+	console.log('all the args: ', arguments)
  	// countdownBot.onMessage(event);
 });
 

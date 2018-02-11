@@ -11,6 +11,8 @@ function eventIsLegit(event) {
 }
 
 function handleSignup (req, res, countdownBot) {
+	let code = req.query.code;
+
 	slack.api('oauth.access', {
 		client_id: process.env.SLACK_CLIENT,
 		client_secret: process.env.SLACK_SECRET,

@@ -1,9 +1,8 @@
 const express = require('express'),
 		 path = require('path'),
 		  Bot = require('./lib/models/bot'),
-			_ = require('lodash'),
+		    _ = require('lodash'),
   serveStatic = require('serve-static'),
- CountdownBot = require('./lib/countdown'),
 	SlackNode = require('slack-node');
 		slack = new SlackNode();	
 
@@ -11,8 +10,7 @@ function eventIsLegit(event) {
 	return process.env.SLACK_VERIFICATION_TOKEN === event.token;
 }
 
-function handleSignup (req, res) {
-	let code = req.query.code;
+function handleSignup (req, res, countdownBot) {
 	slack.api('oauth.access', {
 		client_id: process.env.SLACK_CLIENT,
 		client_secret: process.env.SLACK_SECRET,
@@ -40,13 +38,7 @@ function handleSignup (req, res) {
 					});
 
 					bot.save().then(bot => {
-						console.log('signup success response', response);
-						const channel = _.get(response, 'incoming_webhook.channel_id');
-						if (channel) {
-							this._sayHello({channel_uid: channel}, {token: token});
-						} else {
-							console.log('no channel for some reason!');
-						}
+						countdownBot.onSignupSucces(response, botAccessToken);
 						res.sendFile(path.join(__dirname + '/public/thanks.html'));
 					});
 				}
@@ -60,7 +52,7 @@ module.exports = function(app, db, countdownBot, slackEvents) {
 	// Initializing route groups
 	app.use("/", express.static(__dirname + '/public/'));
 
-	app.get('/thanks', (req, res) => handleSignup(req, res));
+	app.get('/thanks', (req, res) => handleSignup(req, res, countdownBot));
 
 	app.use('/*', (req, res) => {
 		res.status(500).sendFile(path.join(__dirname + '/public/error.html'));
@@ -77,9 +69,9 @@ module.exports = function(app, db, countdownBot, slackEvents) {
 	});
 
 	slackEvents.on('app_mention', (event)=> {
-		console.log('hey, a mention!', event);
+		console.log('hey, a message of some type')
 		if (eventIsLegit(event)) {
-		 	CountdownBot.onMessage(event);
+		 	countdownBot.onMessage(event);
 		} else {
 			console.error('Token incorrect for event: ', event);
 		}

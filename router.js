@@ -65,6 +65,7 @@ module.exports = function(app, db, countdownBot, slackEvents) {
 	// /\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\
 
 	// Attach listeners to events by Slack Event "type". See: https://api.slack.com/events/message.im
+	app.use('/slack/events', slackEvents.expressMiddleware());
 
 	slackEvents.on('message', (event)=> {
 		console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);

@@ -34,7 +34,6 @@ db.once('open', () => console.log(`Connected to DB in ${isTestMode() ? 'test mod
 
 // express setup
 app.use(bodyParser.json());
-app.use('/slack/events', slackEvents.expressMiddleware());
 app.use("/public", express.static(__dirname));
 app.listen(process.env.PORT || 1337, function () {
 	console.log(`Server listening on port ${this.address().port}`)

@@ -6,10 +6,6 @@ const express = require('express'),
 	SlackNode = require('slack-node');
 		slack = new SlackNode();	
 
-function eventIsLegit(event) {
-	return process.env.SLACK_VERIFICATION_TOKEN === event.token;
-}
-
 function handleSignup (req, res, countdownBot) {
 	let code = req.query.code;
 

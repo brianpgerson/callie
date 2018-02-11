@@ -8,6 +8,7 @@ const express = require('express'),
 
 function handleSignup (req, res, countdownBot) {
 	let code = req.query.code;
+	console.log(code, req)
 
 	slack.api('oauth.access', {
 		client_id: process.env.SLACK_CLIENT,

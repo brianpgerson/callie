@@ -51,9 +51,8 @@ slackEvents.on('message.channels', (event) => {
 	console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
 });
 
-slackEvents.on('app_mention', (event) => {
-	console.log('hey, a message of some type:', event)
-	console.log('all the args: ', arguments)
+slackEvents.on('app_mention', (event, body) => {
+	console.log('hey, a message of some type:', event, body)
  	// countdownBot.onMessage(event);
 });
 

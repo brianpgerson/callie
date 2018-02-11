@@ -79,6 +79,8 @@ module.exports = function(app, db, countdownBot, slackEvents) {
 	// Handle errors (see `errorCodes` export)
 	slackEvents.on('error', console.error);
 
+	// Handle any other bad routes
+
 	app.use('/*', (req, res) => {
 		res.status(500).sendFile(path.join(__dirname + '/public/error.html'));
 	});

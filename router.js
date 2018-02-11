@@ -43,7 +43,7 @@ function handleSignup (req, res) {
 						console.log('signup success response', response);
 						const channel = _.get(response, 'incoming_webhook.channel_id');
 						if (channel) {
-							this._sayHello({channel_uid: settings.channel}, {token: token});
+							this._sayHello({channel_uid: channel}, {token: token});
 						} else {
 							console.log('no channel for some reason!');
 						}

@@ -34,14 +34,40 @@ db.once('open', () => console.log(`Connected to DB in ${isTestMode() ? 'test mod
 
 // express setup
 app.use(bodyParser.json());
+
+const countdownBot = new CountdownBot();
+
+// //\//\//\//\//\//\//\//\//\//\//\//\//\//\//\//\//\//\
+// 					SLACK EVENT HANDLING
+// /\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\
+
+// Attach listeners to events by Slack Event "type". See: https://api.slack.com/events/message.im
+app.use('/slack/events', slackEvents.expressMiddleware());
+
+slackEvents.on('message', (event) => {
+	console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
+});
+
+slackEvents.on('app_mention', (event) => {
+	console.log('hey, a message of some type')
+	if (eventIsLegit(event)) {
+	 	countdownBot.onMessage(event);
+	} else {
+		console.error('Token incorrect for event: ', event);
+	}
+});
+
+// Handle errors (see `errorCodes` export)
+slackEvents.on('error', console.error);
+
+
 app.use("/public", express.static(__dirname));
 app.listen(process.env.PORT || 1337, function () {
 	console.log(`Server listening on port ${this.address().port}`)
 });
 
 // business logic begins
-const countdownBot = new CountdownBot();
-router(app, db, countdownBot, slackEvents);
+router(app, db, countdownBot);
 
 setTimeout(function() {
 	countdownBot.initiateScheduler();

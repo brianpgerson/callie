@@ -1,7 +1,7 @@
 const express = require('express'),
 		 path = require('path'),
 		  Bot = require('./lib/models/bot'),
-		    _ = require('lodash'),
+			_ = require('lodash'),
   serveStatic = require('serve-static'),
  CountdownBot = require('./lib/countdown'),
 	SlackNode = require('slack-node');
@@ -40,7 +40,13 @@ function handleSignup (req, res) {
 					});
 
 					bot.save().then(bot => {
-						CountdownBot.onSignupSuccess(response, botAccessToken);
+						console.log('signup success response', response);
+						const channel = _.get(response, 'incoming_webhook.channel_id');
+						if (channel) {
+							this._sayHello({channel_uid: settings.channel}, {token: token});
+						} else {
+							console.log('no channel for some reason!');
+						}
 						res.sendFile(path.join(__dirname + '/public/thanks.html'));
 					});
 				}

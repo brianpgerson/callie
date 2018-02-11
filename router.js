@@ -52,7 +52,7 @@ function handleSignup (req, res, countdownBot) {
 
 module.exports = function(app, db, countdownBot, slackEvents) {
 	// Initializing route groups
-	app.use("/", express.static(__dirname + '/public/'));
+	// app.use("/", express.static(__dirname + '/public/'));
 
 	app.get('/thanks', (req, res) => handleSignup(req, res, countdownBot));
 
@@ -63,11 +63,11 @@ module.exports = function(app, db, countdownBot, slackEvents) {
 	// Attach listeners to events by Slack Event "type". See: https://api.slack.com/events/message.im
 	app.use('/slack/events', slackEvents.expressMiddleware());
 
-	slackEvents.on('message', (event)=> {
+	slackEvents.on('message', (event) => {
 		console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
 	});
 
-	slackEvents.on('app_mention', (event)=> {
+	slackEvents.on('app_mention', (event) => {
 		console.log('hey, a message of some type')
 		if (eventIsLegit(event)) {
 		 	countdownBot.onMessage(event);

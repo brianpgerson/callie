@@ -49,11 +49,8 @@ slackEvents.on('message.channels', (event) => {
 });
 
 slackEvents.on('app_mention', (event) => {
-	console.log('hey, a message of some type')
-	if (process.env.SLACK_VERIFICATION_TOKEN === event.token) {
-	 	countdownBot.onMessage(event);
-	} else {
-		console.error('Token incorrect for event: ', event);
+	console.log('hey, a message of some type:', event)
+ 	countdownBot.onMessage(event);
 	}
 });
 

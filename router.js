@@ -40,7 +40,7 @@ function handleSignup (req, res, countdownBot) {
 					});
 
 					bot.save().then(bot => {
-						countdownBot.onSignupSucces(response, botAccessToken);
+						countdownBot.onSignupSuccess(response, botAccessToken);
 						res.sendFile(path.join(__dirname + '/public/thanks.html'));
 					});
 				}

@@ -11,7 +11,10 @@ const 	   CountdownBot = require('../lib/countdown'),
 			 bodyParser = require('body-parser'),
 	  				 _  = require('lodash'),
 createSlackEventAdapter = require('@slack/events-api').createSlackEventAdapter,
-			slackEvents = createSlackEventAdapter(process.env.SLACK_VERIFICATION_TOKEN, {includeBody: true}),
+			slackEvents = createSlackEventAdapter(process.env.SLACK_VERIFICATION_TOKEN, {
+							includeBody: true,
+							includeHeaders: true
+						}),
 		 	  Countdown = require('../lib/models/countdown'),
 		   	    express = require('express'),
 			 	  utils = require('../lib/utils'),

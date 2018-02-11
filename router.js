@@ -56,10 +56,6 @@ module.exports = function(app, db, countdownBot, slackEvents) {
 
 	app.get('/thanks', (req, res) => handleSignup(req, res, countdownBot));
 
-	app.use('/*', (req, res) => {
-		res.status(500).sendFile(path.join(__dirname + '/public/error.html'));
-	});
-
 	// //\//\//\//\//\//\//\//\//\//\//\//\//\//\//\//\//\//\
 	// 					SLACK EVENT HANDLING
 	// /\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\
@@ -82,4 +78,8 @@ module.exports = function(app, db, countdownBot, slackEvents) {
 
 	// Handle errors (see `errorCodes` export)
 	slackEvents.on('error', console.error);
+
+	app.use('/*', (req, res) => {
+		res.status(500).sendFile(path.join(__dirname + '/public/error.html'));
+	});
 };

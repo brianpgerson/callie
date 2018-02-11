@@ -70,6 +70,7 @@ module.exports = function(app, db, countdownBot, slackEvents) {
 	});
 
 	slackEvents.on('app_mention', (event)=> {
+		console.log('hey, a mention!', event);
 		if (eventIsLegit(event)) {
 		 	CountdownBot.onMessage(event);
 		} else {

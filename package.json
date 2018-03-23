@@ -27,8 +27,5 @@
     "serve-static": "^1.11.1",
     "slack-node": "^0.1.8",
     "slackbots": "^1.0.2"
-  },
-  "devDependencies": {
-    "node-inspector": "^0.12.8"
   }
 }

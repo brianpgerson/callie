@@ -36,7 +36,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => console.log(`Connected to DB in ${isTestMode() ? 'test mode' : 'live mode'}`));
 
 // express setup
-app.use(bodyParser.json());
+
+app.use(bodyParser.json({limit: "15MB", type:'application/json'}));
 
 const countdownBot = new CountdownBot();
 

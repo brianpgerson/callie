@@ -37,7 +37,7 @@ db.once('open', () => console.log(`Connected to DB in ${isTestMode() ? 'test mod
 
 // express setup
 
-app.use(bodyParser.json({limit: "15MB", type:'application/json'}));
+app.use(bodyParser({limit: "15MB"}));
 
 const countdownBot = new CountdownBot();
 

@@ -1,5 +1,22 @@
+html {
+	height: 100%;
+}
+
 .jumbotron {
 	padding: 0;
+	background-color: inherit;
+}
+
+.bigger-list {
+	font-size: 20px;
+}
+
+.bigger-list a {
+	color: cyan;
+}
+
+.bigger-list a:hover {
+	color: green;
 }
 
 #add_to_slack {

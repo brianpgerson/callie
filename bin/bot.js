@@ -1,7 +1,9 @@
 'use strict';
 
 // I use dotenv to manage config vars. remove below if you do not.
-// require('dotenv').config();
+if (process.env.NODE_ENV="test_env") {
+	require('dotenv').config();
+}
 
 const 	   CountdownBot = require('../lib/countdown'),
 				 cities = require('../data/cities'),

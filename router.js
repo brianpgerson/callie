@@ -38,7 +38,7 @@ function handleSignup (req, res, countdownBot) {
 
 					bot.save().then(bot => {
 						countdownBot.onSignupSuccess(botAccessToken, response);
-						res.sendFile(path.join(__dirname + '/public/thanks.html'));
+						res.sendFile(path.join(__dirname + '/public/success.html'));
 					});
 				}
 			});
@@ -51,7 +51,7 @@ module.exports = function(app, db, countdownBot) {
 	// Initializing route groups
 	app.use("/", express.static(__dirname + '/public/'));
 
-	app.get('/thanks', (req, res) => handleSignup(req, res, countdownBot));
+	app.get('/success', (req, res) => handleSignup(req, res, countdownBot));
 
 	// Handle any other bad routes
 	app.use('/*', (req, res) => {

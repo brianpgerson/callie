@@ -1,7 +1,7 @@
 'use strict';
 
 // I use dotenv to manage config vars. remove below if you do not.
-if (process.env.NODE_ENV="test_env") {
+if (process.env.NODE_ENV==="test_env") {
 	require('dotenv').config();
 }
 

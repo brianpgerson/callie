@@ -6,10 +6,8 @@ if (process.env.NODE_ENV==="test_env") {
 }
 
 const 	   CountdownBot = require('../lib/countdown'),
-				 cities = require('../data/cities'),
 		  	   mongoose = require('mongoose'),
 				 router = require('../router'),
-			   		Bot = require('../lib/models/bot'),
 			 bodyParser = require('body-parser'),
 	  				 _  = require('lodash'),
 createSlackEventAdapter = require('@slack/events-api').createSlackEventAdapter,
@@ -17,9 +15,7 @@ createSlackEventAdapter = require('@slack/events-api').createSlackEventAdapter,
 							includeBody: true,
 							includeHeaders: true
 						}),
-		 	  Countdown = require('../lib/models/countdown'),
 		   	    express = require('express'),
-			 	  utils = require('../lib/utils'),
 			   		app = express();
 
 
@@ -58,6 +54,9 @@ slackEvents.on('app_mention', (event, body) => {
 // Handle errors (see `errorCodes` export)
 slackEvents.on('error', console.error);
 
+slackEvents.on('app_uninstalled', event => {
+	countdownBot.deleteBot(event.teamId);
+});
 
 app.use("/public", express.static(__dirname));
 app.listen(process.env.PORT || 1337, function () {

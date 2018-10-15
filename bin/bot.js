@@ -55,7 +55,13 @@ slackEvents.on('app_mention', (event, body) => {
 slackEvents.on('error', console.error);
 
 slackEvents.on('app_uninstalled', event => {
-	countdownBot.deleteBot(event.teamId);
+	console.log('Ready to delete bot! ', event);
+	countdownBot.deleteBot(event.team_id);
+});
+
+slackEvents.on('tokens_revoked', event => {
+	console.log('Tokens revoked for bot! ', event);
+	countdownBot.deleteBot(event.team_id);
 });
 
 app.use("/public", express.static(__dirname));

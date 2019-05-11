@@ -5,9 +5,11 @@ const help = require('./help'),
 	  nodumb = require('./nodumb'),
 	  cities = require('./cities');
 
-module.exports = {
+const presets = {
 	help: help,
 	sayHello: sayHello,
 	nodumb: nodumb,
 	cities: cities
-}
+};
+
+export default presets;

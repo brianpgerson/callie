@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//= ===============================
-// Bot Schema
-//= ===============================
 const BotSchema = new Schema({
   userId: {
     type: String,
@@ -26,8 +23,5 @@ const BotSchema = new Schema({
     timestamps: true
   });
 
-//= ===============================
-// Bot ORM Methods
-//= ===============================
-
-module.exports = mongoose.model('Bot', BotSchema);
+const Bot = mongoose.model('Bot', BotSchema);
+export default Bot;

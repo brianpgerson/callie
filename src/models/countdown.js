@@ -1,13 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//= ===============================
-// Countdown Schema
-//= ===============================
 const CountdownSchema = new Schema({
   botId: {
     type: String,
-    required: true
+    required: false
   },
   botAccessToken: {
     type: String,
@@ -54,8 +51,5 @@ const CountdownSchema = new Schema({
     timestamps: true
   });
 
-//= ===============================
-// Countdown ORM Methods
-//= ===============================
-
-module.exports = mongoose.model('Countdown', CountdownSchema);
+const Countdown = mongoose.model('Countdown', CountdownSchema);
+export default Countdown;

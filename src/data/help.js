@@ -1,4 +1,4 @@
-module.exports = `Hi, I'm Callie - I'm a simple way to keep a running countdown to an event you and your team are excited about.
+module.exports = `Happy to help!
 
 Any countdown just needs a date, an event name, and an optional destination.
 

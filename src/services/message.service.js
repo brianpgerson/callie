@@ -94,13 +94,11 @@ const _api = (methodName, params) => {
     form: _preprocessParams(params)
   };
       
-
-  console.log(JSON.stringify(data));
   return new Promise((resolve, reject) => {
     request.post(data, (err, _, body) => {
       if (err) {
         reject(err);
-        console.log(`err: ${JSON.stringify(err)}`);
+        console.error(`err: ${JSON.stringify(err)}`);
         return false;
       }
 
@@ -113,7 +111,7 @@ const _api = (methodName, params) => {
           resolve(body);
         } else {
           reject(body);
-          console.log(`rejected slack post! body: ${JSON.stringify(body)}`);
+          console.error(`rejected slack post! body: ${JSON.stringify(body)}`);
         }
       } catch (e) {
         reject(e);

@@ -12,13 +12,9 @@ const formatAndNotify = configuration => countdowns => R.pipe(
     R.isEmpty,
     R.always(`You haven't listed any events yet! Ask for 'help' if you're having a ...ruff time!`),
     R.pipe(
-      R.tap(a => console.log(a)),
       mapIndexed(({event, date}, idx) => `${idx + 1}: ${event} _on_ ${moment(date).calendar()}`),
-      R.tap(a => console.log(a)),
       R.join('\n'),
-      R.tap(a => console.log(a)),
       events => `Your events:\n ${events}`,
-      R.tap(a => console.log(a)),
     )
   ),
   message => notify(message)(configuration)

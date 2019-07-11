@@ -35,7 +35,10 @@ const getCountdown = async (configuration) => {
   const { settings: { event }} = configuration;
   const countdown = await findCountdown(configuration);
   return R.ifElse(
-    isSuccessful,
+    R.isNil || R.propEq('failure', true),
+    () => notify(`Oh no! No countdown found for an event called ${
+      event
+    }! Try asking me for "list" to see your currently active countdowns.`)(configuration),
     R.pipe(
       buildMessageDetails,
       R.ifElse(
@@ -44,9 +47,6 @@ const getCountdown = async (configuration) => {
         giveCountdown(configuration),
       )
     ),
-    () => notify(`Oh no! No countdown found for an event called ${
-      event
-    }! Try asking me for "list" to see your currently active countdowns.`)(configuration),
   )(countdown)
 }
 

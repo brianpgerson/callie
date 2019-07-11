@@ -39,6 +39,8 @@ const slackEvents = createSlackEventAdapter(
 slackEvents.on('app_mention', async (event, body) => {
   try {
     const configuration = await parser(body);
+    console.log(configuration);
+    
     handleIntermediateActions(configuration);
   } catch (e) {
     console.error(`Error handling app message: ${e}`);

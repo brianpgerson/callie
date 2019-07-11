@@ -17,7 +17,6 @@ const notifyNeedDateAndEvent = notify('You must set both an event and a date.');
 
 const saveCountdownAndNotifyResults = async (configuration) => {
   const countdown = await saveCountdown(configuration);
-  
   return R.ifElse(
     isSuccessful,
     () => notify(`I've created your new countdown for ${configuration.settings.event}!`, configuration),

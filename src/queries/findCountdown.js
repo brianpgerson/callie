@@ -1,13 +1,11 @@
+import R from 'ramda';
 import Countdown from '../models/countdown';
 
 const findCountdown = async (configuration) => {
   const { teamId, settings: { event }} = configuration;
-  console.log('FINDING COUNTDOWN', configuration);
   
   try {
-    const countdown = await Countdown.findOne({ teamId, event });
-    console.log(countdown);
-    return countdown;
+    return await Countdown.findOne({ teamId, event });
   } catch (e) {
     console.error(e);
     return { failure: true, error: e };

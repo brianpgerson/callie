@@ -61,7 +61,7 @@ describe('parseMessage', () => {
   });
 
   it('parses a schedule message', async () => {
-    const text = '<@U0LAN0Z89> schedule event: funtown, day: sunday, hour: 11'
+    const text = '<@U0LAN0Z89> schedule: weekly, event: funtown, day: sunday, hour: 11'
     const startMessage = getMessage(text);
     const configuration = await parseMessage(startMessage);  
     expect(configuration).toMatchObject(getExpected({ event: 'funtown', day: 'sunday', hour: '11' }, 'schedule', text));

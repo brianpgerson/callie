@@ -68,8 +68,7 @@ const addUserInputs = (configuration) => R.assoc('settings', parseSettings(confi
 
 const parseSettings = configuration => R.pipe(
   R.prop('message'),
-  R.toLower,
-  text => getSettingsAfterType(text, configuration)
+  text => getSettingsAfterType(text, configuration),
 )(configuration);
 
 const sanitizeLinks = (settingValue) => R.ifElse(
@@ -86,7 +85,7 @@ const sanitizeLinks = (settingValue) => R.ifElse(
 const getSettingsAfterType = (text, { type }) => R.pipe(
     R.indexOf(type),
     R.unless(
-      () => R.equals(MESSAGE_TYPES.SCHEDULE, type),
+      () => R.equals(MESSAGE_TYPES.SCHEDULE, R.toLower(type)),
       idx => R.sum([idx, R.length(type)]),
     ),
     R.drop(R.__, text),
@@ -94,6 +93,9 @@ const getSettingsAfterType = (text, { type }) => R.pipe(
     R.split(','),
     R.map(R.pipe(R.split(':'), R.map(R.trim))),
     R.reduce((settings, pair) => R.assoc(pair[0], sanitizeLinks(pair[1]), settings), {}),
+    R.toPairs,
+    R.map(([key, val]) => [R.toLower(key), val]),
+    R.fromPairs,
     R.pick(ALLOWED_FIELDS)
   )(text);
 

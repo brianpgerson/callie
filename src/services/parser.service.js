@@ -97,7 +97,6 @@ const getSettingsAfterType = (text, { type }) => R.pipe(
     R.map(([key, val]) => [R.toLower(key), val]),
     R.fromPairs,
     R.pick(ALLOWED_FIELDS),
-    R.tap(a => console.log(a)),
   )(text);
 
 export default parseMessage;

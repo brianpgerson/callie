@@ -5,7 +5,9 @@ const findCountdown = async (configuration) => {
   console.log('FINDING COUNTDOWN', configuration);
   
   try {
-    return await Countdown.findOne({ teamId, event });
+    const countdown = await Countdown.findOne({ teamId, event });
+    console.log(countdown);
+    return countdown;
   } catch (e) {
     console.error(e);
     return { failure: true, error: e };

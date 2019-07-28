@@ -35,7 +35,11 @@ const executeReminder = (countdown) => {
     }
   };
 
-  getCountdownScheduled(countdown, configuration);
+  try {
+    getCountdownScheduled(countdown, configuration);
+  } catch (e) {
+    console.error(`Couldn't execute scheduled countdown for ${teamId} with token ${botAccessToken}! error: ${e}`);
+  }
 }
 
 export default initiateScheduler;

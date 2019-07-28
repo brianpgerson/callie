@@ -1,8 +1,6 @@
 const express = require('express'),
 		 path = require('path'),
 		  Bot = require('./lib/models/bot'),
-		    _ = require('lodash'),
-  serveStatic = require('serve-static'),
 	SlackNode = require('slack-node');
 		slack = new SlackNode();	
 

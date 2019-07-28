@@ -112,6 +112,7 @@ const getSettingsAfterType = (text, { type }) => R.pipe(
     R.toPairs,
     R.map(([key, val]) => [R.toLower(key), val]),
     R.fromPairs,
+    R.tap(a => console.log(a)),
     R.pick(ALLOWED_FIELDS),
   )(text);
 

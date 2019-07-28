@@ -82,10 +82,25 @@ const sanitizeLinks = (settingValue) => R.ifElse(
   R.always(settingValue)
 )(settingValue);
 
+const isType = (toCheck, type) => R.equals(toCheck, R.toLower(type))
+
+const handleCountdown = (type) => (text) => R.pipe(
+  R.split(R.toLower(type)),
+  R.ifElse(
+    R.pipe(R.last, R.match(/event:/), R.isEmpty),
+    R.join('countdown event'),
+    R.join('countdown'),
+  )
+)(text)
+
 const getSettingsAfterType = (text, { type }) => R.pipe(
+    R.when(
+      () => isType(MESSAGE_TYPES.COUNTDOWN, type),
+      handleCountdown(type),
+    ),
     R.indexOf(type),
     R.unless(
-      () => R.equals(MESSAGE_TYPES.SCHEDULE, R.toLower(type)),
+      () => isType(MESSAGE_TYPES.SCHEDULE, type),
       idx => R.sum([idx, R.length(type)]),
     ),
     R.drop(R.__, text),

@@ -1,5 +1,6 @@
 .DS_Store
 .env
+.vscode
 data/.DS_Store
 npm-debug.log
 dist/*

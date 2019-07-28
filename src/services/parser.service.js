@@ -91,34 +91,33 @@ const handleCountdown = (type) => (text) => R.pipe(
     R.join('countdown event'),
     R.join('countdown'),
   ),
-  R.tap(a => console.log('woof', a)),
 )(text)
 
-const getSettingsAfterType = (text, { type }) => R.pipe(
-    R.when(
-      () => isType(MESSAGE_TYPES.COUNTDOWN, type),
-      handleCountdown(type),
-    ),
-    R.tap(a => console.log('arf', a)),
+const getSettingsAfterType = (text, { type }) => {
+  const transformedText = R.when(
+    () => isType(MESSAGE_TYPES.COUNTDOWN, type),
+    handleCountdown(type),
+  )(text);
+
+  const cleanedText = R.pipe(
     R.indexOf(type),
     R.unless(
       () => isType(MESSAGE_TYPES.SCHEDULE, type),
       idx => R.sum([idx, R.length(type)]),
     ),
-    R.tap(a => console.log(a)),
-    R.drop(R.__, text),
-    R.tap(a => console.log(a)),
+    R.drop(R.__, transformedText),
     R.trim,
+  )(transformedText);
+
+  return R.pipe(
     R.split(','),
     R.map(R.pipe(R.split(':'), R.map(R.trim))),
-    R.tap(a => console.log(a)),
     R.reduce((settings, pair) => R.assoc(pair[0], sanitizeLinks(pair[1]), settings), {}),
     R.toPairs,
-    R.tap(a => console.log(a)),
     R.map(([key, val]) => [R.toLower(key), val]),
     R.fromPairs,
-    R.tap(a => console.log('bark', a)),
     R.pick(ALLOWED_FIELDS),
-  )(text);
+  )(cleanedText)
+};
 
 export default parseMessage;

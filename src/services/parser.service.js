@@ -90,7 +90,8 @@ const handleCountdown = (type) => (text) => R.pipe(
     R.pipe(R.last, R.match(/event:/), R.isEmpty),
     R.join('countdown event'),
     R.join('countdown'),
-  )
+  ),
+  R.tap(a => console.log('woof', a)),
 )(text)
 
 const getSettingsAfterType = (text, { type }) => R.pipe(
@@ -98,7 +99,7 @@ const getSettingsAfterType = (text, { type }) => R.pipe(
       () => isType(MESSAGE_TYPES.COUNTDOWN, type),
       handleCountdown(type),
     ),
-    R.tap(a => console.log(a)),
+    R.tap(a => console.log('arf', a)),
     R.indexOf(type),
     R.unless(
       () => isType(MESSAGE_TYPES.SCHEDULE, type),
@@ -112,7 +113,7 @@ const getSettingsAfterType = (text, { type }) => R.pipe(
     R.toPairs,
     R.map(([key, val]) => [R.toLower(key), val]),
     R.fromPairs,
-    R.tap(a => console.log(a)),
+    R.tap(a => console.log('bark', a)),
     R.pick(ALLOWED_FIELDS),
   )(text);
 

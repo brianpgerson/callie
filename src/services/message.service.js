@@ -22,11 +22,11 @@ const createPrefixStandard = (randoPrefix) => R.pipe(
   R.concat(randoPrefix)
 )
 
-const createPrefixClose = R.pipe(
+const createPrefixClose = (randoPrefix) => R.pipe(
   R.prop('daysUntilEvent'),
   String,
   days => R.concat(days, ` ${days === '1' ? 'day' : 'days'} until `),
-  R.concat(pickRandom(CLOSE_PREFIXES))
+  R.concat(randoPrefix)
 )
 
 const addDestination = ({ destination }) => R.concat(
@@ -39,7 +39,7 @@ export const generateCountdownMessage = messageDetails => R.pipe(
   R.ifElse(
     R.propSatisfies(R.gt(10), 'daysUntilEvent'),
     createPrefixStandard(pickRandom(STANDARD_PREFIXES)),
-    createPrefixClose,
+    createPrefixClose(pickRandom(CLOSE_PREFIXES)),
   ),
   R.unless(
     () => R.propSatisfies(R.isNil, 'destination', messageDetails),

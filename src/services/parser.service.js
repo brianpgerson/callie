@@ -105,6 +105,7 @@ const getSettingsAfterType = (text, { type }) => R.pipe(
       () => isType(MESSAGE_TYPES.SCHEDULE, type),
       idx => R.sum([idx, R.length(type)]),
     ),
+    R.tap(a => console.log(a)),
     R.drop(R.__, text),
     R.tap(a => console.log(a)),
     R.trim,

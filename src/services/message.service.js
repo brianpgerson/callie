@@ -15,11 +15,11 @@ import {
 export const notify = R.curry((message, { channel, accessToken }) => {
   postMessage(channel, message, { token: accessToken })
 });
-const createPrefixStandard = R.pipe(
+const createPrefixStandard = (randoPrefix) => R.pipe(
   R.prop('daysUntilEvent'),
   String,
   R.concat(R.__, ' days until '),
-  R.concat(pickRandom(STANDARD_PREFIXES))
+  R.concat(randoPrefix)
 )
 
 const createPrefixClose = R.pipe(
@@ -38,7 +38,7 @@ const addEvent = ({ event }) => R.concat(R.__, event);
 export const generateCountdownMessage = messageDetails => R.pipe(
   R.ifElse(
     R.propSatisfies(R.gt(10), 'daysUntilEvent'),
-    createPrefixStandard,
+    createPrefixStandard(pickRandom(STANDARD_PREFIXES)),
     createPrefixClose,
   ),
   R.unless(

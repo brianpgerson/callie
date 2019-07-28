@@ -98,6 +98,7 @@ const getSettingsAfterType = (text, { type }) => R.pipe(
       () => isType(MESSAGE_TYPES.COUNTDOWN, type),
       handleCountdown(type),
     ),
+    R.tap(a => console.log(a)),
     R.indexOf(type),
     R.unless(
       () => isType(MESSAGE_TYPES.SCHEDULE, type),

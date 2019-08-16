@@ -12,6 +12,7 @@ const formatAndNotify = configuration => countdowns => R.pipe(
     R.isEmpty,
     R.always(`You haven't listed any events yet! Ask for 'help' if you're having a ...ruff time!`),
     R.pipe(
+      sortEventsByDate,
       mapIndexed(({event, date}, idx) => `${idx + 1}: ${event} _on_ ${moment(date).calendar()}`),
       R.join('\n'),
       events => `Your events:\n ${events}`,
@@ -19,6 +20,9 @@ const formatAndNotify = configuration => countdowns => R.pipe(
   ),
   message => notify(message)(configuration)
 )(countdowns)
+
+const sortEventsByDate = (events) => R.sort((e0, e1) => moment(e0.date).isBefore(e1.date) ? -1 : (moment(e0.date).isSame(e1.date) ? 0 : 1), events)
+
 
 const listTeamEvents = async (configuration) => {
   const countdowns = await findCountdowns(configuration);
@@ -30,4 +34,4 @@ const listTeamEvents = async (configuration) => {
   )(countdowns);
 };
       
-export default listTeamEvents;
+export default listTeamEvents

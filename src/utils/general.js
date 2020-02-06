@@ -19,7 +19,6 @@ export const pickRandom = (options) => R.unless(
     R.prop('length'),
     R.multiply(Math.random()),
     Math.floor,
-    R.tap(a => console.log(a)),
     idx => R.nth(idx, options)
   )
 )(options)

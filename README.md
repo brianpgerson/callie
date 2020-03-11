@@ -28,7 +28,7 @@ heroku create test-callie
 ```
 3. Make changes to code
 4. Setup a [development app](https://api.slack.com/apps?new_app=1) on Slack to test
-4. Add the following environment variables to [heroku](https://dashboard.heroku.com/)
+4. Add the following environment variables to [heroku](https://dashboard.heroku.com/)  
 CALLIE - The username for the app  
 PROD_DB - `heroku config:get MONGODB_URI`  
 SLACK_CLIENT - from Slack  

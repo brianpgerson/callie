@@ -23,6 +23,11 @@ const CountdownSchema = new Schema({
     type: String,
     required: true
   },
+  workdays: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   event: {
     type: String,
     required: true

@@ -11,35 +11,45 @@ const isInChannel = R.pipe(
 const getEventMessage = R.path(['event', 'text']);
 
 const extractType = R.pipe(
-  getEventMessage,
-  R.split(' '),
-  R.nth(1),
-  R.split(':'),
-  R.head,
-  R.toUpper,
-  R.propOr(MESSAGE_TYPES.UNKNOWN, R.__, MESSAGE_TYPES),
-)
+    getEventMessage,
+    R.split(' '),
+    R.nth(1),
+    R.split(':'),
+    R.head,
+    R.toUpper,
+    R.propOr(MESSAGE_TYPES.UNKNOWN, R.__, MESSAGE_TYPES),
+  );
+
+// Used in parseMessage
 const isValidMessage = (messageEvent) => R.allPass([isChannelMessage, hasTeamId])(messageEvent);
 
+// Used in isValidMessage
 const isChannelMessage = (messageEvent) => R.pipe(
   R.path(['event', 'channel']),
   R.allPass([R.is(String), isInChannel]),
 )(messageEvent);
 
+// Used in isValidMessage
 const hasTeamId = R.has('team_id');
+// Used in getAccessToken
 const getTeamId = R.prop('team_id');
+// Used in createBaseConfiguration
 const getChannel = R.path(['event', 'channel']);
 
+// Used in createBaseConfiguration
 const getAccessToken = async (messageEvent) => R.pipe(
   getTeamId,
   async id => await retrieveAccessToken(id),
 )(messageEvent);
 
+// Used in main pipeline from handleValidMessage
 const createBaseConfiguration = async (messageEvent) => {
+  console.log(messageEvent);
   const token = await getAccessToken(messageEvent);
   return R.applySpec({
     channel: getChannel,
     message: getEventMessage,
+    // TODO: get workingdays boolean from message string
     type: extractType,
     teamId: getTeamId,
     settings: R.always({}),
@@ -53,11 +63,13 @@ const isNonAction = R.pipe(
   R.includes(R.__, [MESSAGE_TYPES.HELP, MESSAGE_TYPES.LIST]),
 );
 
+// Used in parseMessage
 const handleValidMessage = async (messageEvent) => {
   const config = await createBaseConfiguration(messageEvent);
   return isNonAction(config) ? config : addUserInputs(config);  
 }
 
+// Parsing Pipeline starts here
 const parseMessage = async (messageEvent) => 
   R.when(
   isValidMessage,

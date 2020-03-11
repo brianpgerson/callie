@@ -11,8 +11,8 @@ export const MESSAGE_TYPES = {
 };
 
 export const CHANNEL_SIGNIFIERS = ['G', 'C', 'D'];
-export const CALLIE = 'callie';
-export const ALLOWED_FIELDS = ['date', 'token', 'teamId', 'event', 'destination', 'schedule', 'day', 'hour', 'countdown'];
+export const CALLIE = process.env.CALLIE;
+export const ALLOWED_FIELDS = ['date', 'token', 'teamId', 'event', 'destination', 'schedule', 'day', 'hour', 'countdown', 'workdays'];
 
 export const DAY_STRING_TO_INT = {
   monday: 1,

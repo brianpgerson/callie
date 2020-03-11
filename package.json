@@ -5,12 +5,16 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "test": "jest --watch",
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run-script build && node dist/index.js",
     "start-local": "npm run build && NODE_ENV=test_env node dist/index.js"
   },
   "author": "Brian Gerson",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
     "@babel/polyfill": "^7.8.7",
     "@slack/events-api": "^1.0.1",
     "bluebird": "^3.7.2",
@@ -29,10 +33,6 @@
     "slack-node": "^0.1.8"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.8.7",
     "@babel/register": "^7.8.6",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",

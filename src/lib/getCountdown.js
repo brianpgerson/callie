@@ -1,16 +1,30 @@
 /* use-strict */
 
 import R from 'ramda';
-import moment from 'moment';
+// Using https://www.npmjs.com/package/moment-business-days
+import moment from 'moment-business-days';
 import { notify, generateCountdownMessage } from '../services/message.service';
 import findCountdown from '../queries/findCountdown';
 import deleteCountdown from '../queries/deleteCountdown';
 import { isSuccessful } from '../utils/general';
 
+const setWeekDays = async (days) => {
+  moment.updateLocale('us', {
+    workingWeekdays: days
+  })
+};
+
 const getDaysUntilEvent = R.pipe(
   R.prop('date'),
   moment,
-  date => date.diff(moment().tz("America/Los_Angeles"), 'hours'),
+  R.cond([
+    // If workdays set to true only count Mon-Fri
+    [ R.propEq('workingdays', true), setWeekDays([1, 2, 3, 4, 5]) ],
+    // else count every day as default??
+    [ R.T, setWeekDays([1, 2, 3, 4, 5, 6, 7]) ]
+  ]),
+  // Use the date prop which is a New moment() and find the diff with the current time in hours
+  date => date.businessDiff(moment().tz("America/Los_Angeles"), 'hours'),
   R.divide(R.__, 24),
   Math.ceil
 )

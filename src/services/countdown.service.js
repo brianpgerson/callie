@@ -28,7 +28,7 @@ const handleIntermediateActions = (configuration) =>
     [typeEq(MESSAGE_TYPES.COUNTDOWN), getCountdown],
     [typeEq(MESSAGE_TYPES.HELLO), notify(presets.hello)],
     [typeEq(MESSAGE_TYPES.UNKNOWN), generateRandomReply],
-    [R.T, config => console.log(config)],
+    [R.T, () => {}],
   ])(configuration)
 
 export default handleIntermediateActions;

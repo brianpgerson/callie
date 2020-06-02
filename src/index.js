@@ -20,7 +20,7 @@ const testDb = process.env.TEST_DB;
 const prodDb = process.env.PROD_DB;
 const isTestEnv = process.env.NODE_ENV === 'test_env';
 const port = process.env.PORT || 1337;
-const databaseUrl = isTestEnv ? testDb : prodDb;
+const databaseUrl = isTestEnv ? prodDb : prodDb;
 mongoose.Promise = bluebird;
 mongoose.connect(databaseUrl);
 
@@ -39,8 +39,6 @@ const slackEvents = createSlackEventAdapter(
 slackEvents.on('app_mention', async (event, body) => {
   try {
     const configuration = await parser(body);
-    console.log(configuration);
-    
     handleIntermediateActions(configuration);
   } catch (e) {
     console.error(`Error handling app message: ${e}`);
@@ -50,16 +48,6 @@ slackEvents.on('app_mention', async (event, body) => {
 slackEvents.on('error', console.error);
 
 slackEvents.on('app_uninstalled', event => {
-  console.log('Ready to delete bot! ', event);
-  try {
-    removeBot(event.team_id);
-  } catch (e) {
-    console.error(`error deleting bot: ${e}`)
-  }
-});
-
-slackEvents.on('tokens_revoked', event => {
-  console.log('Ready to delete bot! ', event);
   try {
     removeBot(event.team_id);
   } catch (e) {
